@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/contrib/all'
 require 'sinatra/cors'
-
+require 'json'
 
 set :default_content_type, 'application/json'
 
@@ -9,14 +9,25 @@ set :allow_origin, "http://localhost:3000"
 set :allow_methods, "GET,HEAD,POST"
 set :allow_headers, "content-type,if-modified-since"
 set :expose_headers, "location,link"
+# set :show_exceptions, ""
 
+# Endpoints
 get "/" do
-    '{"grid": [1,2,3,4,5,6,7,8,9]}'
+    '{"game": "?"}'
 end
 
-#   options "*" do
-#     response.headers["Allow"] = "GET, PUT, POST, DELETE, OPTIONS"
-#     response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
-#     response.headers["Access-Control-Allow-Origin"] = "http://localhost:3000"
-#     200
-#   end
+get "/welcome" do
+  message = Message.new
+  welcome = message.welcome
+  
+  data = { 'welcome' => welcome }
+  data.to_json
+end
+
+get "/grid" do
+  board = Board.new
+  grid = board.reset_grid
+  
+  data = { 'grid' => grid }
+  data.to_json
+end
