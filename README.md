@@ -35,6 +35,7 @@ To view code coverage report run command
 - [Git](https://git-scm.com/) 2.35.1
 - [Sintara](https://rubydoc.info/gems/sinatra) 2.2.0
 - [Sintara contrib](http://sinatrarb.com/contrib/) 2.20
+- [Sinatra cors](https://rubygems.org/gems/sinatra-cors) 1.2.0
 - [SimpleCov](https://github.com/simplecov-ruby/simplecov)
 - [RuboCop](https://rubocop.org/)
 ## Features
@@ -47,3 +48,4 @@ To view code coverage report run command
 - [Sinatra Docs](http://sinatrarb.com/intro.html)
 - [Sinatra The Book](https://sinatra-org-book.herokuapp.com/#toc_0)
 - [Sinatra Gem Docs](https://rubydoc.info/gems/sinatra)
+- [Sinatra CORS GitHub Doc](https://github.com/jdesrosiers/sinatra-cors)
