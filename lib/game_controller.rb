@@ -23,9 +23,6 @@ class GameController
   end
 
   def create_game
-    display.clear_terminal
-    display.welcome
-
     player1_token = game_mode.select_game_mode
     @player1 = game_mode.set_player1(player1_token)
     @player2 = HumanPlayer.new('O', 'Human', display)

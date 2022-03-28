@@ -13,16 +13,24 @@ set :expose_headers, "location,link"
 
 # Endpoints
 get "/" do
-    '{"game": "?"}'
+  data = { 'grid' => [1,2,3,4,5,6,7,8,9] }
+  data.to_json
 end
 
-# get "/welcome" do
-#   message = Message.new
-#   welcome = message.welcome
+get "/start-game" do
+  board = Board.new
+  message = Message.new
+  input_validation = InputValidation.new
+  display = Display.new(message, board, input_validation)
+  game_mode = GameMode.new(display)
+  game_controller = GameController.new(display, game_mode, message, board)
+  player1 = HumanPlayer.new('X', 'Human', display)
+  player2 = HumanPlayer.new('O', 'Human', display)
+  game = Game.new(board, display, player1, player2)
   
-#   data = { 'welcome' => welcome }
-#   data.to_json
-# end
+  response = { 'message' => 'Player X turn' }
+  response.to_json
+end
 
 get "/grid" do
   board = Board.new

@@ -19,22 +19,17 @@ class Game
 
   def take_turn
     until game_over?
-      display.print_show_current_player(current_player.marker, current_player.name)
       prompt_player
       play_turn(current_player, current_player.get_move)
-      display.clear_terminal
-      display.generate_board
-
     end
     game_status
   end
 
   def prompt_player
     if current_player.name == 'Computer'
-      display.print_computer_thinking
-      sleep 2
+      "Computer thinking... "
     else
-      display.print_enter_num unless game_over?
+      "Enter a number between 1-9: " unless game_over?
     end
   end
 
@@ -44,8 +39,7 @@ class Game
       update_current_player
 
     else
-      display.print_invalid_move
-      sleep 2
+      "Invalid move. Try again"
     end
   end
 
@@ -67,9 +61,9 @@ class Game
 
   def game_status
     if board.board_full? && !board.win?
-      display.print_tie
+      "It's a tie. Game Over!"
     else
-      display.print_won(winning_player)
+      "Player wins!"
     end
   end
 
