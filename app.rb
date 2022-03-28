@@ -63,6 +63,8 @@ post "/grid/:move" do
 
   p "Current player: ", @game.current_player.marker
   p "Cuurent board: ", @game.board.grid
+
+  
   @game.play_turn(@game.current_player.marker, @request_payload.to_i)
   p "Update board: ", @game.board.grid
   p "Update current player: ", @game.current_player.marker
