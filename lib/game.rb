@@ -13,14 +13,13 @@ class Game
 
   def start_game
     board.reset_grid
-    display.generate_board
     take_turn
   end
 
   def take_turn
     until game_over?
-      prompt_player
-      play_turn(current_player, current_player.get_move)
+      # prompt_player
+      play_turn(current_player, current_player_move)
     end
     game_status
   end

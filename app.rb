@@ -11,6 +11,23 @@ set :allow_headers, "content-type, if-modified-since, access-control-allow-origi
 set :expose_headers, "location,link"
 # set :show_exceptions, ""
 
+before do 
+  board = Board.new
+  message = Message.new
+  input_validation = InputValidation.new
+  display = Display.new(message, board, input_validation)
+  game_mode = GameMode.new(display)
+  game_controller = GameController.new(display, game_mode, message, board)
+  player1 = HumanPlayer.new('X', 'Human', display)
+  player2 = HumanPlayer.new('O', 'Human', display)
+  @game = Game.new(board, display, player1, player2)
+end
+
+# before do
+#   request.body.rewind
+#   @request_payload = JSON.parse request.body.read
+# end
+
 # Endpoints
 get "/" do
   data = { 'grid' => [1,2,3,4,5,6,7,8,9] }
@@ -26,9 +43,33 @@ get "/start-game" do
   game_controller = GameController.new(display, game_mode, message, board)
   player1 = HumanPlayer.new('X', 'Human', display)
   player2 = HumanPlayer.new('O', 'Human', display)
-  game = Game.new(board, display, player1, player2)
+  @game = Game.new(board, display, player1, player2)
   
+  # game.start_game
+
   response = { 'message' => 'Player X turn' }
+  response.to_json
+end
+
+post "/grid/:move" do
+  # player_move = JSON.parse(request.body)
+  # print "DATA player move=", player_move
+
+  p "#{params['move']}"
+ 
+  p "REQUEST BODY REWIND: ", request.body
+  @request_payload = JSON.parse request.body.read
+  p "REQUEST PAYLOAD: ",@request_payload.to_i
+
+  p "Current player: ", @game.current_player.marker
+  p "Cuurent board: ", @game.board.grid
+  @game.play_turn(@game.current_player.marker, @request_payload.to_i)
+  p "Update board: ", @game.board.grid
+  p "Update current player: ", @game.current_player.marker
+  
+ 
+  response = { 'current_player' => @game.current_player.marker, 'grid' => @game.board.grid}
+  p 'Grid Move response', response
   response.to_json
 end
 
