@@ -1,6 +1,4 @@
 require_relative 'board'
-require 'sinatra/base'
-
 class Game
   attr_reader :board, :display, :player1, :player2, :current_player
 
@@ -12,25 +10,26 @@ class Game
     @current_player = player1
   end
 
-  def start_game
-    board.reset_grid
-    take_turn
-  end
+  # def start_game
+  #   board.reset_grid
+  #   take_turn
+  # end
 
   def take_turn
     until game_over?
+      # prompt_player
       play_turn(current_player, current_player_move)
     end
     game_status
   end
 
-  def prompt_player
-    if current_player.name == 'Computer'
-      "Computer thinking... "
-    else
-      "Enter a number between 1-9: " unless game_over?
-    end
-  end
+  # def prompt_player
+  #   if current_player.name == 'Computer'
+  #     "Computer thinking... "
+  #   else
+  #     "Enter a number between 1-9: " unless game_over?
+  #   end
+  # end
 
   def play_turn(player, move)
     if valid_move?(move)

@@ -9,7 +9,7 @@ class HumanPlayer < Player
     @display = display
   end
 
-  def get_move
-    display.human_player_move(marker, name)
-  end
+  # def get_move
+  #   display.human_player_move(marker, name)
+  # end
 end

@@ -13,20 +13,20 @@ set :default_content_type, 'application/json'
 
 set :allow_origin, "http://localhost:3000"
 set :allow_methods, "GET,HEAD,POST,PUT,PATCH"
-set :allow_headers, "content-type, if-modified-since, access-control-allow-origin, content-type" 
+set :allow_headers, "content-type, if-modified-since, access-control-allow-origin" 
 set :expose_headers, "location,link"
 # set :show_exceptions, ""
 
 before do 
-  board = Board.new
-  message = Message.new
-  input_validation = InputValidation.new
-  display = Display.new(message, board, input_validation)
-  game_mode = GameMode.new(display)
-  game_controller = GameController.new(display, game_mode, message, board)
-  player1 = HumanPlayer.new('X', 'Human', display)
-  player2 = HumanPlayer.new('O', 'Human', display)
-  @game = Game.new(board, display, player1, player2)
+  # board = Board.new
+  # message = Message.new
+  # input_validation = InputValidation.new
+  # display = Display.new(message, board, input_validation)
+  # game_mode = GameMode.new(display)
+  # game_controller = GameController.new(display, game_mode, message, board)
+  # player1 = HumanPlayer.new('X', 'Human', display)
+  # player2 = HumanPlayer.new('O', 'Human', display)
+  # @game = Game.new(board, display, player1, player2)
 end
 
 # before do
@@ -41,36 +41,51 @@ get "/" do
 end
 
 get "/start-game" do
-  board = Board.new
   message = Message.new
+  board = Board.new
   input_validation = InputValidation.new
   display = Display.new(message, board, input_validation)
   game_mode = GameMode.new(display)
-  game_controller = GameController.new(display, game_mode, message, board)
+  @game_controller = GameController.new(display, game_mode, message, board)
   player1 = HumanPlayer.new('X', 'Human', display)
   player2 = HumanPlayer.new('O', 'Human', display)
-  game = Game.new(board, display, player1, player2)
- 
-  # @game.start_game
+  @game = Game.new(board, display, player1, player2)
 
-  response = { 'message' => 'Player X turn' }
+  # get NameError - uninitialized constant AppBuilder
+  # @app_builder = AppBuilder.new
+
+  response = { 'current_player' => @game.current_player.marker }
+  response.to_json
+end
+
+get "/start-game/grid" do
+  response = { 'current_player' => @game.current_player.marker, 'grid' => @game.board.grid}
   response.to_json
 end
 
 put "/start-game/grid" do
-  # player_move = JSON.parse(request.body)
-  # print "DATA player move=", player_move
+  message = Message.new
+  board = Board.new
+  input_validation = InputValidation.new
+  display = Display.new(message, board, input_validation)
+  player1 = HumanPlayer.new('X', 'Human', display)
+  player2 = HumanPlayer.new('O', 'Human', display)
+  @game = Game.new(board, display, player1, player2)
 
   # p "#{params['move']}"
  
   p "REQUEST BODY REWIND: ", request.body
   @request_payload = JSON.parse request.body.read
-  p "REQUEST PAYLOAD: ",@request_payload.to_i
+  p "REQUEST PAYLOAD: ",@request_payload
 
-  # p "Current player: ", @gamecurrent_player.marker
-  # p "Current board: ", game.board.grid
+  p "Current player, move ", @request_payload[0], @request_payload[1].to_i
 
-  @game.play_turn(@game.current_player.marker, @request_payload.to_i)
+  # inital method - but kept returning O marker
+  # @game.play_turn(@request_payload[0], @request_payload[1].to_i)
+
+  board.mark_board(@request_payload[0], @request_payload[1].to_i)
+  @game.update_current_player
+
   # p "Update board: ", @game.board.grid
   # p "Update current player: ", @game.current_player.marker
   
