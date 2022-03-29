@@ -1,4 +1,5 @@
 require_relative 'board'
+require 'sinatra/base'
 
 class Game
   attr_reader :board, :display, :player1, :player2, :current_player
@@ -18,7 +19,6 @@ class Game
 
   def take_turn
     until game_over?
-      # prompt_player
       play_turn(current_player, current_player_move)
     end
     game_status
@@ -36,7 +36,6 @@ class Game
     if valid_move?(move)
       update_board(player, move)
       update_current_player
-
     else
       "Invalid move. Try again"
     end

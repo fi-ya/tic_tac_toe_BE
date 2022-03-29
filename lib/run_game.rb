@@ -6,6 +6,7 @@ require_relative 'computer_player'
 require_relative 'human_player'
 require_relative 'game_mode'
 require_relative 'game_controller'
+require 'sinatra/base'
 
 def start_game
   board = Board.new
