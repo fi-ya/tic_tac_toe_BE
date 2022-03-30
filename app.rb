@@ -31,14 +31,7 @@ get "/" do
 end
 
 get "/start-game" do
-  # board = Board.new(%w[1 2 3 4 5 6 7 8 9])
-  # player1 = HumanPlayer.new('X', 'Human')
-  # player2 = HumanPlayer.new('O', 'Human')
-  # @game = Game.new(board, player1, player2)
-
-  # get NameError - uninitialized constant AppBuilder
-  # @app_builder =  AppBuilder.new(%w[1 2 3 4 5 6 7 8 9])
-
+  $app_builder.board.reset_grid
   response = { 'current_player' => $app_builder.game.current_player.marker }
   response.to_json
 end
@@ -49,32 +42,19 @@ get "/start-game/grid" do
 end
 
 put "/start-game/grid" do
-  # message = Message.new
-  # board = Board.new(game.board.grid)
-  # input_validation = InputValidation.new
-  # display = Display.new(message, board, input_validation)
-  # player1 = HumanPlayer.new('X', 'Human', display)
-  # player2 = HumanPlayer.new('O', 'Human', display)
-  # @game = Game.new(board, display, player1, player2)
-
-  # p "#{params['move']}"
- 
-  p "REQUEST BODY REWIND: ", request.body
   @request_payload = JSON.parse request.body.read
   p "REQUEST PAYLOAD: ",@request_payload
-
   p "Current player, move ", @request_payload[0], @request_payload[1].to_i
 
-  # inital method - but kept returning O marker
-  # @game.play_turn(@request_payload[0], @request_payload[1].to_i)
+  # $app_builder.game.take_turn(@request_payload[0], @request_payload[1].to_i)
+  # $app_builder.game.update_current_player
+  if !$app_builder.game.game_over?
+    $app_builder.board.mark_board(@request_payload[0], @request_payload[1].to_i)
+    $app_builder.game.update_current_player
+  end
+  game_status = $app_builder.game.game_status($app_builder.game.winning_player)
 
-  $app_builder.board.mark_board(@request_payload[0], @request_payload[1].to_i)
-  $app_builder.game.update_current_player
-
-  # p "Update board: ", @game.board.grid
-  # p "Update current player: ", @game.current_player.marker
-  
-  response = { 'current_player' => $app_builder.game.current_player.marker, 'grid' => $app_builder.game.board.grid}
+  response = { 'current_player' => $app_builder.game.current_player.marker, 'grid' => $app_builder.game.board.grid, 'game_status'=> game_status}
   p 'Grid Move response', response
   response.to_json
 end

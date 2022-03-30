@@ -1,6 +1,7 @@
 require_relative 'board'
 class Game
-  attr_accessor :board, :player1, :player2, :current_player
+  attr_accessor :board, :current_player
+  attr_reader :player1, :player2
 
   def initialize(board, player1, player2)
     @board = board
@@ -9,15 +10,14 @@ class Game
     @current_player = player1
   end
 
-  # def start_game
+  # def start_game(player, move)
   #   board.reset_grid
-  #   take_turn(current_player, current_player_move)
+  #   take_turn(player, move)
   # end
 
-  def take_turn(current_player, current_player_move)
+  def take_turn(player, move)
     until game_over?
-      # prompt_player
-      play_turn(current_player, current_player_move)
+      play_turn(player, move)
     end
     game_status
   end
@@ -55,11 +55,11 @@ class Game
     board.board_full? || board.win?
   end
 
-  def game_status
+  def game_status(marker)
     if board.board_full? && !board.win?
       "It's a tie. Game Over!"
     else
-      "Player wins!"
+      "Player #{marker} wins!"
     end
   end
 
