@@ -1,7 +1,6 @@
 require_relative 'board'
 class Game
-  attr_accessor :board, :current_player
-  attr_reader :player1, :player2
+  attr_accessor :board, :current_player, :player1, :player2
 
   def initialize(board, player1, player2)
     @board = board
@@ -10,60 +9,54 @@ class Game
     @current_player = player1
   end
 
-  # def start_game(player, move)
-  #   board.reset_grid
-  #   take_turn(player, move)
-  # end
-
-  def take_turn(player, move)
-    if !game_over?
-      play_turn(player, move)
-      game_status
+  def take_turn(grid, player, move)
+    if !game_over?(grid)
+      new_grid = play_turn(grid, player, move)
+      # new_grid
     end 
   end
 
-  def play_turn(player, move)
-    if valid_move?(move)
-      update_board(player, move)
-      update_current_player
+  def play_turn(grid, player, move)
+    if valid_move?(move, grid)
+      update_board(grid, player, move)
     else
       "Invalid move. Try again"
     end
   end
 
-  def update_board(player, move)
-    player == player1.marker ? board.mark_board(player1.marker, move) : board.mark_board(player2.marker, move)
+  def update_board(grid, player, move)
+    player == player1.marker ? board.mark_board(grid, player1.marker, move) : board.mark_board(grid, player2.marker, move)
   end
 
-  def update_current_player
-    current_player == player1 ? set_current_player(player2) : set_current_player(player1)
+  def update_current_player(current_player, player1, player2)
+    current_player == player1.marker ? set_current_player(player2.marker) : set_current_player(player1.marker)
   end
 
   def set_current_player(current_player)
     @current_player = current_player
   end
 
-  def game_over?
-    board.board_full? || board.win?
+  def game_over?(grid)
+    board.board_full?(grid) || board.win?(grid)
   end
 
-  def game_status
-    if !board.board_full? && !board.win?
+  def game_status(grid)
+    if !board.board_full?(grid) && !board.win?(grid)
       "Keep playing"
-    elsif board.board_full? && !board.win?
+    elsif board.board_full?(grid) && !board.win?(grid)
       "Tie"
     else
       "Won"
     end
   end
 
-  def winning_player
-    board.grid.count(player1.marker) > board.grid.count(player2.marker) ? player1.marker : player2.marker
+  def winning_player(grid)
+    grid.count(player1.marker) > grid.count(player2.marker) ? player1.marker : player2.marker
   end
 
   # private
 
-  def valid_move?(index)
-    !board.position_taken?(index) && index.between?(1, 9)
+  def valid_move?(index, grid)
+    !board.position_taken?(index, grid) && index.between?(1, 9)
   end
 end

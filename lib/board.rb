@@ -18,19 +18,12 @@ class Board
     [2, 4, 6]
   ].freeze
 
-  def generate
-    "\n #{grid[0]} | #{grid[1]} | #{grid[2]} \n" \
-      "-----------\n" \
-      " #{grid[3]} | #{grid[4]} | #{grid[5]} \n" \
-      "-----------\n" \
-      " #{grid[6]} | #{grid[7]} | #{grid[8]} \n"
-  end
-
-  def mark_board(player, move)
+  def mark_board(grid, player, move)
     grid[move - 1] = player
+    grid
   end
 
-  def available_moves
+  def available_moves(grid)
     available_moves = []
     grid.each do |cell|
       available_moves.push(cell) if cell.count('1-9').positive?
@@ -38,15 +31,15 @@ class Board
     available_moves
   end
 
-  def board_full?
-    available_moves.empty?
+  def board_full?(grid)
+    available_moves(grid).empty?
   end
 
-  def position_taken?(position)
+  def position_taken?(position, grid)
     !grid.include?(position.to_s)
   end
 
-  def win?
+  def win?(grid)
     winning_plays = []
 
     WINNING_MOVES.all? do |winning_game|
@@ -59,6 +52,6 @@ class Board
   end
 
   def reset_grid
-    @grid = %w[1 2 3 4 5 6 7 8 9]
+    %w[1 2 3 4 5 6 7 8 9]
   end
 end

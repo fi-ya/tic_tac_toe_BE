@@ -18,31 +18,44 @@ $app_builder = AppBuilder.new($grid)
 
 # Endpoints
 get "/" do
-  data = { 'grid' => $grid }
-  data.to_json
+  # data = { 'grid' => $grid }
+  # data.to_json
 end
 
 get "/start-game" do
-  $app_builder = AppBuilder.new(%w[1 2 3 4 5 6 7 8 9])
-  response = { 'current_player' => $app_builder.game.current_player.marker }
+  new_grid = $app_builder.board.reset_grid
+  reset_current_player = $app_builder.game.player1
+  reset_current_player_marker = $app_builder.game.player1.marker
+  response = { 'reset_current_player' => "#{reset_current_player}", 'reset_current_player_marker' => "#{reset_current_player_marker}", 'new_grid' => "#{new_grid}" }
   response.to_json
 end
 
 get "/start-game/grid" do
-  response = { 'current_player' => $app_builder.game.current_player.marker, 'grid' => $app_builder.game.board.grid}
-  response.to_json
+
 end
 
 put "/start-game/grid" do
   @request_payload = JSON.parse request.body.read
   p "REQUEST PAYLOAD: ",@request_payload
-  p "Current player, move ", @request_payload[0], @request_payload[1].to_i
+  
+  grid = @request_payload[0]
+  player = @request_payload[1]
+  player_move = @request_payload[2].to_i
 
-  game_status = $app_builder.game.take_turn(@request_payload[0], @request_payload[1].to_i)
+  updated_grid =  $app_builder.game.take_turn(grid, player, player_move)
+  p "UPDATED_GRID:", updated_grid 
+
+  current_player_marker =  $app_builder.game.update_current_player(player,$app_builder.game.player1, $app_builder.game.player2 )
+  p "current_playerMARKER", current_player_marker
+ 
+  game_status = $app_builder.game.game_status(grid)
+  winner = $app_builder.game.winning_player(grid)
 
   response = { 
-    'current_player' => $app_builder.game.current_player.marker, 'grid' => $app_builder.game.board.grid,
-    'game_status'=> "#{game_status}"
+    'updated_grid' => "#{updated_grid}",
+    'current_player_marker' => "#{current_player_marker}", 
+    'game_status'=> "#{game_status}", 
+    'winner' => "#{winner}"
     }
   p 'Grid Move response', response
   response.to_json
