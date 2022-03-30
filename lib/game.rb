@@ -18,17 +18,9 @@ class Game
   def take_turn(player, move)
     if !game_over?
       play_turn(player, move)
-    end
-    game_status(player)
+      game_status
+    end 
   end
-
-  # def prompt_player
-  #   if current_player.name == 'Computer'
-  #     "Computer thinking... "
-  #   else
-  #     "Enter a number between 1-9: " unless game_over?
-  #   end
-  # end
 
   def play_turn(player, move)
     if valid_move?(move)
@@ -55,11 +47,13 @@ class Game
     board.board_full? || board.win?
   end
 
-  def game_status(marker)
-    if board.board_full? && !board.win?
-      "It's a tie. Game Over!"
+  def game_status
+    if !board.board_full? && !board.win?
+      "Keep playing"
+    elsif board.board_full? && !board.win?
+      "Tie"
     else
-      "Player #{marker} wins!"
+      "Won"
     end
   end
 

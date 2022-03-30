@@ -31,6 +31,7 @@ get "/" do
 end
 
 get "/start-game" do
+  $app_builder = AppBuilder.new(%w[1 2 3 4 5 6 7 8 9])
   $app_builder.board.reset_grid
   response = { 'current_player' => $app_builder.game.current_player.marker }
   response.to_json
@@ -46,21 +47,14 @@ put "/start-game/grid" do
   p "REQUEST PAYLOAD: ",@request_payload
   p "Current player, move ", @request_payload[0], @request_payload[1].to_i
 
-  $app_builder.game.take_turn(@request_payload[0], @request_payload[1].to_i)
-  # $app_builder.game.update_current_player
-  # if !$app_builder.game.game_over?
-  #   p "PLAYER 1 IS:", $app_builder.game.player1
-  #   $app_builder.game.play_turn(@request_payload[0], @request_payload[1].to_i)
-  #   # $app_builder.board.mark_board(@request_payload[0], @request_payload[1].to_i)
-  #   # $app_builder.game.update_current_player
-  # end
-  game_status = $app_builder.game.game_status($app_builder.game.winning_player)
+  game_status = $app_builder.game.take_turn(@request_payload[0], @request_payload[1].to_i)
 
-  response = { 'current_player' => $app_builder.game.current_player.marker, 'grid' => $app_builder.game.board.grid, 'game_status'=> game_status}
+  response = { 'current_player' => $app_builder.game.current_player.marker, 'grid' => $app_builder.game.board.grid,
+     'game_status'=> "#{game_status}"
+    }
   p 'Grid Move response', response
   response.to_json
 end
-
 
 # post "/grid/:move" do
  
