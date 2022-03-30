@@ -68,8 +68,8 @@ put "/start-game/grid" do
   # inital method - but kept returning O marker
   # @game.play_turn(@request_payload[0], @request_payload[1].to_i)
 
-  $app_builder.game.play_turn(@request_payload[0], @request_payload[1].to_i)
-  # $app_builder.game.update_current_player
+  $app_builder.board.mark_board(@request_payload[0], @request_payload[1].to_i)
+  $app_builder.game.update_current_player
 
   # p "Update board: ", @game.board.grid
   # p "Update current player: ", @game.current_player.marker
