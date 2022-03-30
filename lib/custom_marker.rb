@@ -4,14 +4,14 @@ require_relative 'human_player'
 require_relative 'computer_player'
 
 class CustomMarker
-  attr_reader :display
-  attr_accessor :player1, :player2, :player1_marker, :player2_marker
+  # attr_reader :display
+  # attr_accessor :player1, :player2, :player1_marker, :player2_marker
 
-  def initialize(display, player1, player2)
-    @display = display
-    @player1 = player1
-    @player2 = player2
-  end
+  # def initialize(display, player1, player2)
+  #   @display = display
+  #   @player1 = player1
+  #   @player2 = player2
+  # end
 
   # def choose_custom_marker
   #   display.ask_custom_marker

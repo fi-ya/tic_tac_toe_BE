@@ -7,14 +7,14 @@ require_relative 'message'
 require_relative 'custom_marker'
 
 class GameController
-  attr_accessor :display, :game_mode, :player1, :player2, :game, :message, :board, :custom_marker
+  # attr_accessor :display, :game_mode, :player1, :player2, :game, :message, :board, :custom_marker
 
-  def initialize(display, game_mode, message, board)
-    @display = display
-    @game_mode = game_mode
-    @message = message
-    @board = board
-  end
+  # def initialize(display, game_mode, message, board)
+  #   @display = display
+  #   @game_mode = game_mode
+  #   @message = message
+  #   @board = board
+  # end
 
   # def start_session
   #   create_game

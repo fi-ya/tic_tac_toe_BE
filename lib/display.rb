@@ -2,14 +2,14 @@ require_relative 'board'
 require_relative 'message'
 require_relative 'input_validation'
 class Display
-  attr_accessor :message, :board, :input_validation, :mode_choice, :replay_exit_choice, :custom_marker1,
-                :custom_marker2
+  # attr_accessor :message, :board, :input_validation, :mode_choice, :replay_exit_choice, :custom_marker1,
+  #               :custom_marker2
 
-  def initialize(message, board, input_validation)
-    @message = message
-    @input_validation = input_validation
-    @board = board
-  end
+  # def initialize(message, board, input_validation)
+  #   @message = message
+  #   @input_validation = input_validation
+  #   @board = board
+  # end
 
   # def clear_terminal
   #   system 'clear'

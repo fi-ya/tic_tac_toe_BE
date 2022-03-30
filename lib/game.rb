@@ -1,10 +1,9 @@
 require_relative 'board'
 class Game
-  attr_reader :board, :display, :player1, :player2, :current_player
+  attr_accessor :board, :player1, :player2, :current_player
 
-  def initialize(board, display, player1, player2)
+  def initialize(board, player1, player2)
     @board = board
-    @display = display
     @player1 = player1
     @player2 = player2
     @current_player = player1
@@ -12,10 +11,10 @@ class Game
 
   # def start_game
   #   board.reset_grid
-  #   take_turn
+  #   take_turn(current_player, current_player_move)
   # end
 
-  def take_turn
+  def take_turn(current_player, current_player_move)
     until game_over?
       # prompt_player
       play_turn(current_player, current_player_move)

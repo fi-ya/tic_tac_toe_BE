@@ -3,11 +3,11 @@ require_relative 'board'
 require_relative 'human_player'
 require_relative 'computer_player'
 class GameMode
-  attr_reader :display
+  # attr_reader :display
 
-  def initialize(display)
-    @display = display
-  end
+  # def initialize(display)
+  #   @display = display
+  # end
 
   # def select_game_mode
   #   display.print_game_mode_selection
