@@ -16,10 +16,10 @@ class Game
   # end
 
   def take_turn(player, move)
-    until game_over?
+    if !game_over?
       play_turn(player, move)
     end
-    game_status
+    game_status(player)
   end
 
   # def prompt_player
@@ -40,7 +40,7 @@ class Game
   end
 
   def update_board(player, move)
-    player == player1 ? board.mark_board(player1.marker, move) : board.mark_board(player2.marker, move)
+    player == player1.marker ? board.mark_board(player1.marker, move) : board.mark_board(player2.marker, move)
   end
 
   def update_current_player
