@@ -26,8 +26,11 @@ get '/start-game' do
   new_grid = $app_builder.board.reset_grid
   reset_current_player = $app_builder.game.player1
   reset_current_player_marker = $app_builder.game.player1.marker
-  response = { 'reset_current_player' => reset_current_player.to_s,
-               'reset_current_player_marker' => reset_current_player_marker.to_s, 'new_grid' => new_grid.to_s }
+  
+  response = { 
+    'reset_current_player_marker' => reset_current_player_marker.to_s, 
+    'new_grid' => new_grid.to_s 
+  }
   response.to_json
 end
 
