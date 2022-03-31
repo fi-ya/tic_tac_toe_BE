@@ -10,22 +10,25 @@ class Game
   end
 
   def take_turn(grid, player, move)
-    if !game_over?(grid)
-      new_grid = play_turn(grid, player, move)
-      # new_grid
-    end 
+    unless game_over?(grid)
+      play_turn(grid, player, move)
+    end
   end
 
   def play_turn(grid, player, move)
     if valid_move?(move, grid)
       update_board(grid, player, move)
     else
-      "Invalid move. Try again"
+      'Invalid move. Try again'
     end
   end
 
   def update_board(grid, player, move)
-    player == player1.marker ? board.mark_board(grid, player1.marker, move) : board.mark_board(grid, player2.marker, move)
+    if player == player1.marker
+      board.mark_board(grid, player1.marker, move)
+    else
+      board.mark_board(grid, player2.marker, move)
+    end
   end
 
   def update_current_player(current_player, player1, player2)
@@ -42,19 +45,17 @@ class Game
 
   def game_status(grid)
     if !board.board_full?(grid) && !board.win?(grid)
-      "Keep playing"
+      'Keep playing'
     elsif board.board_full?(grid) && !board.win?(grid)
-      "Tie"
+      'Tie'
     else
-      "Won"
+      'Won'
     end
   end
 
   def winning_player(grid)
     grid.count(player1.marker) > grid.count(player2.marker) ? player1.marker : player2.marker
   end
-
-  # private
 
   def valid_move?(index, grid)
     !board.position_taken?(index, grid) && index.between?(1, 9)

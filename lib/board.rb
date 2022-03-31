@@ -1,5 +1,3 @@
-require_relative 'message'
-
 class Board
   attr_accessor :grid
 

@@ -22,6 +22,7 @@ The following steps will allow you to run the game in your terminal.
 4. Run application with `ruby app.rb`
 5. View at: http://localhost:4567
 ## Run tests
+### Note: There are currently NO tests for this project 
 Run the following command in the terminal to run the Rspec test suite:
 
 `rspec`
