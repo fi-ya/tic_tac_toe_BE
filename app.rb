@@ -50,7 +50,7 @@ put '/start-game/grid' do
     'updated_grid' => updated_grid.to_s,
     'current_player_marker' => current_player_marker.to_s,
     'game_status' => game_status.to_s,
-    'winner' => winner.to_s
+    'winner' => game_status == 'Won' ? winner.to_s : 'undefined'
   }
   response.to_json
 end
