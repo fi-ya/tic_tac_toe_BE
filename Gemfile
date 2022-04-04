@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-param'
 gem 'sinatra-cors'
+gem 'thin'
 
 gem 'rspec'
 gem 'simplecov', require: false, group: :test
