@@ -2,50 +2,55 @@ require 'sinatra'
 require 'sinatra/contrib/all'
 require 'sinatra/cors'
 require 'json'
+require './lib/app_builder'
+require './lib/board'
+require './lib/game'
+require './lib/human_player'
+require './lib/player'
 
 set :default_content_type, 'application/json'
+set :allow_origin, 'http://localhost:3000'
+set :allow_methods, 'GET,HEAD,POST,PUT,PATCH'
+set :allow_headers, 'content-type, if-modified-since, access-control-allow-origin'
+set :expose_headers, 'location,link'
 
-set :allow_origin, "http://localhost:3000"
-set :allow_methods, "GET,HEAD,POST"
-set :allow_headers, "content-type, if-modified-since, access-control-allow-origin, content-type" 
-set :expose_headers, "location,link"
-# set :show_exceptions, ""
+$grid = %w[1 2 3 4 5 6 7 8 9]
+$app_builder = AppBuilder.new($grid)
 
-# Endpoints
-get "/" do
-    '{"game": "?"}'
-end
-
-# get "/welcome" do
-#   message = Message.new
-#   welcome = message.welcome
-  
-#   data = { 'welcome' => welcome }
-#   data.to_json
-# end
-
-get "/grid" do
-  board = Board.new
-  grid = board.reset_grid
-  
-  data = { 'grid' => grid }
+get '/' do
+  data = { 'grid' => $grid }
   data.to_json
 end
 
-get '/game-mode' do
-  data = JSON.parse(request.body).string
-  # res = { "request" => data}
-  print res , "DATAAA"
-  # "#{res}"
+get '/start-game' do
+  new_grid = $app_builder.board.reset_grid
+  reset_current_player = $app_builder.game.player1
+  reset_current_player_marker = $app_builder.game.player1.marker
+  
+  response = { 
+    'reset_current_player_marker' => reset_current_player_marker.to_s, 
+    'new_grid' => new_grid.to_s 
+  }
+  response.to_json
 end
 
-post '/game-mode' do
-  # returns a stringIO <StringIO:0x0000000113084ad0>
-  @data = request.body.string
-  print "DATA=", @data
-  # set_player = game_mode.set_player1(@data)
-  # p "SET PLAYER:", set_player
- 
-  response = { 'mode' => @data }
+put '/start-game/grid' do
+  @request_payload = JSON.parse request.body.read
+
+  grid = @request_payload[0]
+  player = @request_payload[1]
+  player_move = @request_payload[2].to_i
+
+  updated_grid = $app_builder.game.take_turn(grid, player, player_move)
+  current_player_marker = $app_builder.game.update_current_player(player, $app_builder.game.player1, $app_builder.game.player2)
+  game_status = $app_builder.game.game_status(grid)
+  winner = $app_builder.game.winning_player(grid)
+
+  response = {
+    'updated_grid' => updated_grid.to_s,
+    'current_player_marker' => current_player_marker.to_s,
+    'game_status' => game_status.to_s,
+    'winner' => winner.to_s
+  }
   response.to_json
 end

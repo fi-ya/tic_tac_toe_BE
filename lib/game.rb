@@ -1,85 +1,63 @@
 require_relative 'board'
-
 class Game
-  attr_reader :board, :display, :player1, :player2, :current_player
+  attr_accessor :board, :current_player, :player1, :player2
 
-  def initialize(board, display, player1, player2)
+  def initialize(board, player1, player2)
     @board = board
-    @display = display
     @player1 = player1
     @player2 = player2
     @current_player = player1
   end
 
-  def start_game
-    board.reset_grid
-    display.generate_board
-    take_turn
-  end
-
-  def take_turn
-    until game_over?
-      display.print_show_current_player(current_player.marker, current_player.name)
-      prompt_player
-      play_turn(current_player, current_player.get_move)
-      display.clear_terminal
-      display.generate_board
-
+  def take_turn(grid, player, move)
+    unless game_over?(grid)
+      play_turn(grid, player, move)
     end
-    game_status
   end
 
-  def prompt_player
-    if current_player.name == 'Computer'
-      display.print_computer_thinking
-      sleep 2
+  def play_turn(grid, player, move)
+    if valid_move?(move, grid)
+      update_board(grid, player, move)
     else
-      display.print_enter_num unless game_over?
+      'Invalid move. Try again'
     end
   end
 
-  def play_turn(player, move)
-    if valid_move?(move)
-      update_board(player, move)
-      update_current_player
-
+  def update_board(grid, player, move)
+    if player == player1.marker
+      board.mark_board(grid, player1.marker, move)
     else
-      display.print_invalid_move
-      sleep 2
+      board.mark_board(grid, player2.marker, move)
     end
   end
 
-  def update_board(player, move)
-    player == player1 ? board.mark_board(player1.marker, move) : board.mark_board(player2.marker, move)
-  end
-
-  def update_current_player
-    current_player == player1 ? set_current_player(player2) : set_current_player(player1)
+  def update_current_player(current_player, player1, player2)
+    current_player == player1.marker ? set_current_player(player2.marker) : set_current_player(player1.marker)
   end
 
   def set_current_player(current_player)
     @current_player = current_player
   end
 
-  def game_over?
-    board.board_full? || board.win?
+  def game_over?(grid)
+    board.board_full?(grid) || board.win?(grid)
   end
 
-  def game_status
-    if board.board_full? && !board.win?
-      display.print_tie
+  def game_status(grid)
+    if !board.board_full?(grid) && !board.win?(grid)
+      'Keep playing'
+    elsif board.board_full?(grid) && !board.win?(grid)
+      'Tie'
     else
-      display.print_won(winning_player)
+      'Won'
     end
   end
 
-  def winning_player
-    board.grid.count(player1.marker) > board.grid.count(player2.marker) ? player1.marker : player2.marker
+  def winning_player(grid)
+    grid.count(player1.marker) > grid.count(player2.marker) ? player1.marker : player2.marker
   end
 
-  # private
-
-  def valid_move?(index)
-    !board.position_taken?(index) && index.between?(1, 9)
+  def valid_move?(index, grid)
+    !board.position_taken?(index, grid) && index.between?(1, 9)
   end
 end
