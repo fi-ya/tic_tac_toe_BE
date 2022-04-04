@@ -44,13 +44,21 @@ put '/start-game/grid' do
   updated_grid = $app_builder.game.take_turn(grid, player, player_move)
   current_player_marker = $app_builder.game.update_current_player(player, $app_builder.game.player1, $app_builder.game.player2)
   game_status = $app_builder.game.game_status(grid)
-  winner = $app_builder.game.winning_player(grid)
 
   response = {
     'updated_grid' => updated_grid.to_s,
     'current_player_marker' => current_player_marker.to_s,
     'game_status' => game_status.to_s,
-    'winner' => game_status == 'Won' ? winner.to_s : 'undefined'
+  }
+  response.to_json
+end
+
+get '/start-game/grid/:winning_grid' do
+  grid = params['winning_grid']
+  winner = $app_builder.game.winning_player(grid)
+
+  response = {
+    'winner' =>  winner.to_s 
   }
   response.to_json
 end
