@@ -8,7 +8,7 @@ class GameMode
     when 1
       HumanPlayer.new('X', 'Human')
     when 2
-      ComputerPlayer.new('X','Computer')
+       ComputerPlayer.new('X','Computer')
     end
   end
 end
