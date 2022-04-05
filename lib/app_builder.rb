@@ -1,13 +1,18 @@
 require_relative 'board'
 require_relative 'game'
 require_relative 'human_player'
+require_relative 'computer_player'
+require_relative 'player'
+require_relative 'game_mode'
 
 class AppBuilder
-  attr_accessor :board, :player1, :player2, :game
+  attr_accessor :board, :game_mode, :player1, :player2, :game
 
-  def initialize(grid)
+  def initialize(grid, player1_token)
     @board = Board.new(grid)
-    @player1 = HumanPlayer.new('X', 'Human')
+    @game_mode = GameMode.new
+    # @player1 = HumanPlayer.new('X', 'Human')
+    @player1 = game_mode.set_player1(player1_token)
     @player2 = HumanPlayer.new('O', 'Human')
     @game = Game.new(board, player1, player2)
   end
