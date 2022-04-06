@@ -27,14 +27,10 @@ get '/' do
 end
 
 get '/start-game/:player1_token' do
-  # CHECK player token is correct
+  
   $app_builder.player1_token = params['player1_token'].to_i
-  p 'APP builder updated player1_token:',$app_builder.player1_token
-  
-  # update players game_mode choice - nil?
-  p "IS THIS WORKING:",$app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
-  p 'Has player1 been updated??:',$app_builder.game.player1.name
-  
+  $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
+
   reset_current_player_marker = $app_builder.game.player1.marker
   new_grid = $app_builder.board.reset_grid
   
