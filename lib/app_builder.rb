@@ -18,5 +18,3 @@ class AppBuilder
     @game = Game.new(board, player1, player2)
   end
 end
-
-
