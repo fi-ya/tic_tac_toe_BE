@@ -32,7 +32,6 @@ get '/start-game/:player1_token' do
   $app_builder.player1_token = params['player1_token'].to_i
   $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
 
-
   reset_current_player_marker = $app_builder.game.player1.marker
   new_grid = $app_builder.board.reset_grid
   
@@ -48,27 +47,31 @@ put '/start-game/grid' do
   @request_payload = JSON.parse request.body.read
 
   grid = @request_payload[0]
-  player = @request_payload[1]
+  current_player = @request_payload[1]
   player_move = @request_payload[2].to_i
+  player1 = $app_builder.game.player1
+  player2 = $app_builder.game.player2
 
-  updated_grid = $app_builder.game.take_turn(grid, player, player_move)
-  current_player_marker = $app_builder.game.update_current_player(player, $app_builder.game.player1, $app_builder.game.player2)
+  updated_grid = $app_builder.game.take_turn(grid, current_player, player_move, player1, player2)
+  current_player_marker = $app_builder.game.update_current_player(current_player, player1, player2)
   game_status = $app_builder.game.game_status(grid)
+  winner = $app_builder.game.winning_player(grid, player1, player2)
 
   response = {
     'updated_grid' => updated_grid.to_s,
     'current_player_marker' => current_player_marker.to_s,
     'game_status' => game_status.to_s,
-  }
-  response.to_json
-end
-
-get '/start-game/grid/:winning_grid' do
-  grid = params['winning_grid']
-  winner = $app_builder.game.winning_player(grid)
-
-  response = {
     'winner' =>  winner.to_s 
   }
   response.to_json
 end
+
+# get '/start-game/grid/:winning_grid' do
+#   grid = params['winning_grid']
+#   winner = $app_builder.game.winning_player(grid)
+
+#   response = {
+#     'winner' =>  winner.to_s 
+#   }
+#   response.to_json
+# end
