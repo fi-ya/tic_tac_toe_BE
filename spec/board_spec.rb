@@ -1,7 +1,7 @@
 require 'board'
 
 RSpec.describe Board do
-  subject(:board) { described_class.new(%w[1 2 3 4 5 6 7 8 9]) }
+  subject(:board) { described_class.new }
 
   describe '#mark_board' do
     it 'should mark the board correctly' do

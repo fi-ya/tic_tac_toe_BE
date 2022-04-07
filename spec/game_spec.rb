@@ -3,7 +3,7 @@ require 'board'
 require 'human_player'
 
 RSpec.describe Game do 
-  let(:board){Board.new(%w[1 2 3 4 5 6 7 8 9])}
+  let(:board){Board.new}
   let(:player1){HumanPlayer.new('X', 'Human')}
   let(:player2){HumanPlayer.new('O', 'Human')}
   let(:current_player){HumanPlayer.new('X', 'Human')}
