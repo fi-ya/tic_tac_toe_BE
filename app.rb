@@ -19,7 +19,7 @@ set :expose_headers, 'location,link'
 $grid = %w[1 2 3 4 5 6 7 8 9]
 $app_builder = AppBuilder.new($grid)
 # CHECK appBuilder initailased player 1 as human
-p 'ONE player1 start:', $app_builder.player1
+p 'ONE player1 start:',$app_builder.player1
 
 get '/' do
   data = { 'grid' => $grid }
@@ -27,16 +27,18 @@ get '/' do
 end
 
 get '/start-game/:player1_token' do
+  
   $app_builder.player1_token = params['player1_token'].to_i
   $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
 
+
   reset_current_player_marker = $app_builder.game.player1.marker
   new_grid = $app_builder.board.reset_grid
-
-  response = {
+  
+  response = { 
     'reset_current_player1_name' => $app_builder.game.player1.name,
-    'reset_current_player_marker' => reset_current_player_marker.to_s,
-    'new_grid' => new_grid.to_s
+    'reset_current_player_marker' => reset_current_player_marker.to_s, 
+    'new_grid' => new_grid.to_s 
   }
   response.to_json
 end
@@ -49,14 +51,13 @@ put '/start-game/grid' do
   player_move = @request_payload[2].to_i
 
   updated_grid = $app_builder.game.take_turn(grid, player, player_move)
-  current_player_marker = $app_builder.game.update_current_player(player, $app_builder.game.player1,
-                                                                  $app_builder.game.player2)
+  current_player_marker = $app_builder.game.update_current_player(player, $app_builder.game.player1, $app_builder.game.player2)
   game_status = $app_builder.game.game_status(grid)
 
   response = {
     'updated_grid' => updated_grid.to_s,
     'current_player_marker' => current_player_marker.to_s,
-    'game_status' => game_status.to_s
+    'game_status' => game_status.to_s,
   }
   response.to_json
 end
@@ -66,7 +67,7 @@ get '/start-game/grid/:winning_grid' do
   winner = $app_builder.game.winning_player(grid)
 
   response = {
-    'winner' => winner.to_s
+    'winner' =>  winner.to_s 
   }
   response.to_json
 end
