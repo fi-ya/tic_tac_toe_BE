@@ -16,8 +16,9 @@ set :allow_methods, 'GET,HEAD,POST,PUT,PATCH'
 set :allow_headers, 'content-type, if-modified-since, access-control-allow-origin'
 set :expose_headers, 'location,link'
 
-$grid = %w[1 2 3 4 5 6 7 8 9]
-$app_builder = AppBuilder.new($grid)
+# $grid = %w[1 2 3 4 5 6 7 8 9]
+# $app_builder = AppBuilder.new($grid)
+$app_builder = AppBuilder.new
 # CHECK appBuilder initailased player 1 as human
 p 'ONE player1 start:',$app_builder.player1
 

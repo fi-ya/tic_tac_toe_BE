@@ -8,8 +8,9 @@ require_relative 'game_mode'
 class AppBuilder
   attr_accessor :board, :game_mode, :player1, :player2, :game, :player1_token
 
-  def initialize(grid)
-    @board = Board.new(grid)
+  def initialize
+    # @board = Board.new(grid)
+    @board = Board.new
     @game_mode = GameMode.new
     @player1_token = 1
     # @player1 = HumanPlayer.new('X', 'Human')
