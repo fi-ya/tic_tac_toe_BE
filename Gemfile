@@ -7,6 +7,7 @@ gem 'guard-rspec', require: false
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-cors'
+gem 'sinatra-cross_origin'
 gem 'sinatra-param'
 gem 'thin'
 
