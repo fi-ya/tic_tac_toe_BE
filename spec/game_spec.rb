@@ -12,14 +12,14 @@ RSpec.describe Game do
   describe "#play_turn" do 
     context 'invalid move' do 
       it 'should return an error message' do 
-        expect(game.play_turn(%w[X O 3 4 5 6 7 8 9], 'X', 2)).to eq('Invalid move. Try again')
+        expect(game.play_turn(%w[X O 3 4 5 6 7 8 9], 'X', 2, player1, player2)).to eq('Invalid move. Try again')
       end
     end
   end
 
   describe "#update_board" do 
     it 'should update the board with the correct marker' do 
-      expect(game.update_board(%w[1 2 3 4 5 6 7 8 9], 'X', 1)).to eq(%w[X 2 3 4 5 6 7 8 9])
+      expect(game.update_board(%w[1 2 3 4 5 6 7 8 9], 'X', 1, player1, player2)).to eq(%w[X 2 3 4 5 6 7 8 9])
     end
   end
   describe "#update_current_player" do
@@ -80,13 +80,13 @@ RSpec.describe Game do
   describe "#winning_player" do 
     context 'if X wins a game' do 
       it 'should return X marker' do
-        expect(game.winning_player(%w[X X X O 5 6 O 8 9])).to eq('X') 
+        expect(game.winning_player(%w[X X X O 5 6 O 8 9], player1, player2)).to eq('X') 
       end
     end
 
     context 'if O wins a game' do 
       it 'should return O marker' do 
-        expect(game.winning_player(%w[O O O X 5 6 X 8 9])).to eq('O')
+        expect(game.winning_player(%w[O O O X 5 6 X 8 9], player1, player2)).to eq('O')
       end
     end
   end
