@@ -1,5 +1,5 @@
-# require 'sinatra'
-require 'sinatra/base'
+require 'sinatra'
+# require 'sinatra/base'
 require 'sinatra/contrib/all'
 require 'sinatra/cors'
 # require 'sinatra/cross_origin'
@@ -12,12 +12,12 @@ require './lib/player'
 require './lib/game_mode'
 require './lib/computer_player'
 
-class App < Sinatra::Base
+# class App < Sinatra::Application
   
   # register Sinatra::CrossOrigin
   # set :bind, '0.0.0.0'
 
-  register Sinatra::Cors
+  # register Sinatra::Cors
   set :default_content_type, 'application/json'
   set :allow_origin, '*'
   set :allow_methods, 'GET,HEAD,POST,PUT,PATCH,OPTIONS'
@@ -40,13 +40,14 @@ class App < Sinatra::Base
   # CHECK appBuilder initailased player 1 as human
   p 'ONE player1 start:',$app_builder.player1
 
-  # get '/' do
-  #   data = { 'grid' => "world" }
-  #   data.to_json
-  # end
+  get '/' do
+    "Hello World".strip
+    # data = { 'grid' => "world" }
+    # data.to_json
+  end
 
   get '/start-game/:player1_token' do
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    # response.headers['Access-Control-Allow-Origin'] = '*'
 
     $app_builder.player1_token = params['player1_token'].to_i
     $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
@@ -63,24 +64,28 @@ class App < Sinatra::Base
     response.to_json
   end
 
-  # put '/start-game/grid' do
-  #   @request_payload = JSON.parse request.body.read
+  put '/start-game/grid' do
+    @request_payload = JSON.parse request.body.read
 
-  #   grid = @request_payload[0]
-  #   player = @request_payload[1]
-  #   player_move = @request_payload[2].to_i
+    grid = @request_payload[0]
+    current_player = @request_payload[1]
+    player_move = @request_payload[2].to_i
+    player1 = $app_builder.game.player1
+    player2 = $app_builder.game.player2
 
-  #   updated_grid = $app_builder.game.take_turn(grid, player, player_move)
-  #   current_player_marker = $app_builder.game.update_current_player(player, $app_builder.game.player1, $app_builder.game.player2)
-  #   game_status = $app_builder.game.game_status(grid)
+    updated_grid = $app_builder.game.take_turn(grid, current_player, player_move, player1, player2)
+    current_player_marker = $app_builder.game.update_current_player(current_player, player1, player2)
+    game_status = $app_builder.game.game_status(grid)
+    winner = $app_builder.game.winning_player(grid, player1, player2)
 
-  #   response = {
-  #     'updated_grid' => updated_grid.to_s,
-  #     'current_player_marker' => current_player_marker.to_s,
-  #     'game_status' => game_status.to_s,
-  #   }
-  #   response.to_json
-  # end
+    response = {
+      'updated_grid' => updated_grid.to_s,
+      'current_player_marker' => current_player_marker.to_s,
+      'game_status' => game_status.to_s,
+      'winner' => winner.to_s
+    }
+    response.to_json
+  end
 
   # get '/start-game/grid/:winning_grid' do
   #   grid = params['winning_grid']
@@ -105,4 +110,4 @@ class App < Sinatra::Base
   #   200
   # end
   
-end
+# end

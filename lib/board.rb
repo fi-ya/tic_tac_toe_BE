@@ -1,10 +1,5 @@
 class Board
-  # attr_accessor :grid
-
-  # def initialize(grid)
-  #   @grid = grid
-  # end
-
+ 
   WINNING_MOVES = [
     [0, 1, 2],
     [3, 4, 5],
