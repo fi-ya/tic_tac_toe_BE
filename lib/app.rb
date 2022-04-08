@@ -41,6 +41,7 @@ end
 
 put '/start-game/grid' do
   @request_payload = JSON.parse request.body.read
+  p 'request body', @request_payload
 
   grid = @request_payload[0]
   current_player = @request_payload[1]
