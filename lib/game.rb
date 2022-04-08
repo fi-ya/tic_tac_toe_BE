@@ -10,7 +10,7 @@ class Game
   end
 
   def take_turn(grid, player, move, player1, player2)
-      play_turn(grid, player, move, player1, player2) unless game_over?(grid)
+    play_turn(grid, player, move, player1, player2) unless game_over?(grid)
   end
 
   def play_turn(grid, player, move, player1, player2)

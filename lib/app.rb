@@ -17,31 +17,28 @@ set :allow_headers, 'content-type, if-modified-since, access-control-allow-origi
 set :expose_headers, 'location,link'
 
 $app_builder = AppBuilder.new
-# CHECK appBuilder initailased player 1 as human
-p 'ONE player1 start:',$app_builder.player1
 
 get '/' do
-  "Hello World".strip
+  'Hello World'.strip
 end
 
 get '/start-game/:player1_token' do
   $app_builder.player1_token = params['player1_token'].to_i
   $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
-  
+
   reset_current_player_marker = $app_builder.game.player1.marker
   new_grid = $app_builder.board.reset_grid
-  
-  response = { 
+
+  response = {
     'reset_current_player1_name' => $app_builder.game.player1.name,
-    'reset_current_player_marker' => reset_current_player_marker.to_s, 
-    'new_grid' => new_grid.to_s 
+    'reset_current_player_marker' => reset_current_player_marker.to_s,
+    'new_grid' => new_grid.to_s
   }
   response.to_json
 end
 
 put '/start-game/grid' do
   @request_payload = JSON.parse request.body.read
-  p 'request body', @request_payload
 
   grid = @request_payload[0]
   current_player = @request_payload[1]

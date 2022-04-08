@@ -1,7 +1,6 @@
 require 'player'
 
 describe Player do
-
   context 'computer player' do
     subject(:player) { described_class.new('X', 'Computer') }
     it 'should have X marker for computerplayer' do
