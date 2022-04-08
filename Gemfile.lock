@@ -44,6 +44,8 @@ GEM
     rack (2.2.3)
     rack-protection (2.2.0)
       rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     rainbow (3.1.1)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
@@ -113,6 +115,7 @@ DEPENDENCIES
   guard
   guard-rspec
   pry
+  rack-test
   rspec
   rubocop
   simplecov
