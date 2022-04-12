@@ -18,10 +18,6 @@ set :expose_headers, 'location,link'
 
 $app_builder = AppBuilder.new
 
-get '/' do
-  'Hello World'.strip
-end
-
 get '/start-game/:player1_token' do
   $app_builder.player1_token = params['player1_token'].to_i
   $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)

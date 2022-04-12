@@ -11,9 +11,6 @@ RSpec.describe 'app' do
   describe '/' do
     context 'GET' do
       let(:response) { get '/' }
-      it 'reponse returns hello world' do
-        expect(response.body).to eq('Hello World')
-      end
 
       it 'returns status 200 OK' do
         expect(response.status).to eq(200)
@@ -22,16 +19,13 @@ RSpec.describe 'app' do
     end
   end
 
-  describe '/start-game/:player1_token' do
+  describe 'playing the game' do
     context 'GET 1 human vs human game' do
       let(:response) { get '/start-game/1' }
 
-      it 'returns status 200 OK' do
+      it 'expected successful return' do
         expect(response.status).to eq 200
         expect(response).to be_ok
-      end
-
-      it 'headers include content-type' do
         expect(response.headers['Content-Type']).to eq('application/json')
       end
 
