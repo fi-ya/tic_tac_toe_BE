@@ -1,5 +1,6 @@
 require_relative 'player'
-class HumanPlayer < Player
+
+class ComputerPlayer < Player
 
   def initialize(marker, name)
     @marker = marker
