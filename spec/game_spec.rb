@@ -9,16 +9,27 @@ RSpec.describe Game do
   let(:current_player) { HumanPlayer.new('X', 'Human') }
   subject(:game) { described_class.new(board, player1, player2) }
 
+<<<<<<< HEAD
   describe '#play_turn' do
     context 'invalid move' do
       it 'should return an error message' do
+=======
+  describe "#play_turn" do 
+    context 'invalid move' do 
+      it 'should return an error message' do 
+>>>>>>> main
         expect(game.play_turn(%w[X O 3 4 5 6 7 8 9], 'X', 2, player1, player2)).to eq('Invalid move. Try again')
       end
     end
   end
 
+<<<<<<< HEAD
   describe '#update_board' do
     it 'should update the board with the correct marker' do
+=======
+  describe "#update_board" do 
+    it 'should update the board with the correct marker' do 
+>>>>>>> main
       expect(game.update_board(%w[1 2 3 4 5 6 7 8 9], 'X', 1, player1, player2)).to eq(%w[X 2 3 4 5 6 7 8 9])
     end
   end
@@ -80,12 +91,21 @@ RSpec.describe Game do
   describe '#winning_player' do
     context 'if X wins a game' do
       it 'should return X marker' do
+<<<<<<< HEAD
         expect(game.winning_player(%w[X X X O 5 6 O 8 9], player1, player2)).to eq('X')
       end
     end
 
     context 'if O wins a game' do
       it 'should return O marker' do
+=======
+        expect(game.winning_player(%w[X X X O 5 6 O 8 9], player1, player2)).to eq('X') 
+      end
+    end
+
+    context 'if O wins a game' do 
+      it 'should return O marker' do 
+>>>>>>> main
         expect(game.winning_player(%w[O O O X 5 6 X 8 9], player1, player2)).to eq('O')
       end
     end
