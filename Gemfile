@@ -4,9 +4,11 @@ ruby '3.1.0'
 
 gem 'guard'
 gem 'guard-rspec', require: false
+gem 'rack-test'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-cors'
+gem 'sinatra-cross_origin'
 gem 'sinatra-param'
 gem 'thin'
 
