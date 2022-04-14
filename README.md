@@ -16,19 +16,21 @@ It is convention that the 'X' plays first.
 ## Run game
 The following steps will allow you to run the game in your terminal.
 1. Clone repository `git clone git@github.com:fi-ya/tic_tac_toe_BE.git`
-2. Check to see if you have the correct version of Ruby (3.1.0) installed `ruby --version`
+2. Check to see if you have the correct version of Ruby (3.0.0) installed `ruby --version`
    - If not, you can use a software version manager like [chruby](https://github.com/postmodern/chruby), [rvm](https://rvm.io/), [rbenv](https://github.com/rbenv/rbenv). For more information on which one is best for you check [this blog](https://mac.install.guide/ruby/index.html) or follow [this guide](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/#step-2-install-chruby-and-the-latest-ruby-with-ruby-install)
 3. Install dependencies/gems requirements with `bundle install`
-4. Run application with `ruby app.rb`
+4. Run application with `ruby ./lib/app.rb`
 5. View at: http://localhost:4567
 ## Run tests
-### Note: There are currently NO tests for this project 
+
 Run the following command in the terminal to run the Rspec test suite:
 
 `rspec`
 
 To view code coverage report run command
 `open coverage/index.html`
+
+
 ## Tech Stack
 - [Ruby](https://www.ruby-lang.org/en/) 3.1.0
 - [Rspec](https://relishapp.com/rspec) 3.11
