@@ -18,16 +18,16 @@ set :expose_headers, 'location,link'
 
 $app_builder = AppBuilder.new
 
-get '/start-game/:player1_token' do
-  $app_builder.player1_token = params['player1_token'].to_i
-  $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.player1_token)
+get '/start-game/:game_mode_token' do
+  $app_builder.game_mode_token = params['game_mode_token'].to_i
+  $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.game_mode_token)
 
   reset_current_player_marker = $app_builder.game.player1.marker
   new_grid = $app_builder.board.reset_grid
 
   response = {
-    'reset_current_player1_name' => $app_builder.game.player1.name,
-    'reset_current_player_marker' => reset_current_player_marker.to_s,
+    'player1_name' => $app_builder.game.player1.name,
+    'player1_marker' => reset_current_player_marker.to_s,
     'new_grid' => new_grid.to_s
   }
   response.to_json

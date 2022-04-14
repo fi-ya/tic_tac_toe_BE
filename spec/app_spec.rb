@@ -19,12 +19,12 @@ RSpec.describe 'app' do
       end
 
       it 'supports sending :params' do
-        request '/start-game/', params: { 'player1_token' => '1' }
-        expect(last_request.GET['player1_token']).to eq('1')
+        request '/start-game/', params: { 'game_mode_token' => '1' }
+        expect(last_request.GET['game_mode_token']).to eq('1')
       end
 
       it 'returns response body including reset_current_player, reset_current_marker & new_grid' do
-        expect(response.body).to include("{\"reset_current_player1_name\":\"Human\",\"reset_current_player_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
+        expect(response.body).to include("{\"player1_name\":\"Human\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe 'app' do
       end
 
       it 'returns response body including reset_current_player, reset_current_marker & new_grid' do
-        expect(response.body).to include("{\"reset_current_player1_name\":\"Computer\",\"reset_current_player_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
+        expect(response.body).to include("{\"player1_name\":\"Computer\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
       end
     end
   end
