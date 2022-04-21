@@ -67,7 +67,7 @@ RSpec.describe Game do
     it 'should return an keep playing message when board not full and no winning board' do
       expect(game.game_status(%w[X O X O 5 6 7 8 9])).to eq('Keep playing')
     end
-  
+
     it 'should return an tie message when board full and no winning board' do
       expect(game.game_status(%w[X X O O X X X O O])).to eq('Tie')
     end
@@ -75,7 +75,6 @@ RSpec.describe Game do
     it 'should return an won message when board full and winning board' do
       expect(game.game_status(%w[X X X O O O 7 8 9])).to eq('Won')
     end
-  
   end
 
   describe '#winning_player' do
