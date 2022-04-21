@@ -37,18 +37,22 @@ put '/start-game/grid' do
   @request_payload = JSON.parse request.body.read
 
   grid = @request_payload[0]
-  current_player = @request_payload[1]
+  current_player_marker = @request_payload[1]
   player_move = @request_payload[2].to_i
   player1 = $app_builder.game.player1
   player2 = $app_builder.game.player2
 
-  updated_grid = $app_builder.game.take_turn(grid, current_player, player_move, player1, player2)
-  current_player_marker = $app_builder.game.update_current_player(current_player, player1, player2)
+  updated_grid = $app_builder.game.take_turn(grid, current_player_marker, player_move, player1, player2)
+  updated_current_player_marker = $app_builder.game.update_current_player(current_player_marker, player1, player2)
+  
+  current_player_name = $app_builder.game.current_player.name
+  current_player_marker = $app_builder.game.current_player.marker
   game_status = $app_builder.game.game_status(grid)
   winner = $app_builder.game.winning_player(grid, player1, player2)
 
   response = {
     'updated_grid' => updated_grid.to_s,
+    'current_player_name' => current_player_name.to_s,
     'current_player_marker' => current_player_marker.to_s,
     'game_status' => game_status.to_s,
     'winner' => winner.to_s

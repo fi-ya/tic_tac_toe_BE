@@ -9,28 +9,28 @@ class Game
     @current_player = player1
   end
 
-  def take_turn(grid, player, move, player1, player2)
-    play_turn(grid, player, move, player1, player2) unless game_over?(grid)
+  def take_turn(grid, curr_player_marker, move, player1, player2)
+    play_turn(grid, curr_player_marker, move, player1, player2) unless game_over?(grid)
   end
 
-  def play_turn(grid, player, move, player1, player2)
+  def play_turn(grid, curr_player_marker, move, player1, player2)
     if valid_move?(move, grid)
-      update_board(grid, player, move, player1, player2)
+      update_board(grid, curr_player_marker, move, player1, player2)
     else
       'Invalid move. Try again'
     end
   end
 
-  def update_board(grid, player, move, player1, player2)
-    if player == player1.marker
+  def update_board(grid, curr_player_marker, move, player1, player2)
+    if curr_player_marker == player1.marker
       board.mark_board(grid, player1.marker, move)
     else
       board.mark_board(grid, player2.marker, move)
     end
   end
 
-  def update_current_player(current_player, player1, player2)
-    current_player == player1.marker ? set_current_player(player2.marker) : set_current_player(player1.marker)
+  def update_current_player(curr_player_marker, player1, player2)
+    curr_player_marker == player1.marker ? set_current_player(player2) : set_current_player(player1)
   end
 
   def set_current_player(current_player)
