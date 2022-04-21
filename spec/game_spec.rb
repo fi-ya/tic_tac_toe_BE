@@ -1,12 +1,13 @@
 require 'game'
 require 'board'
 require 'human_player'
+require 'computer_player'
 
 RSpec.describe Game do
   let(:board) { Board.new }
   let(:player1) { HumanPlayer.new('X', 'Human') }
   let(:player2) { HumanPlayer.new('O', 'Human') }
-  let(:current_player) { HumanPlayer.new('X', 'Human') }
+  let(:current_player) { :player1 }
   subject(:game) { described_class.new(board, player1, player2) }
 
   describe '#play_turn' do
@@ -22,13 +23,19 @@ RSpec.describe Game do
   end
 
   describe '#update_current_player' do
-    context 'set and update current player correctly' do
-      it 'should update current player marker correctly to O' do
-        expect(game.update_current_player('X', player1, player2)).to eq('O')
+    context 'human vs human game' do
+      it 'should update current player correctly' do
+        expect(game.update_current_player('X', player1, player2)).to be_instance_of(HumanPlayer)
+        expect(game.update_current_player('O', player1, player2)).to be_instance_of(HumanPlayer)
       end
+    end
 
-      it 'should update current player marker correctly to X' do
-        expect(game.update_current_player('O', player1, player2)).to eq('X')
+    context 'computer vs human game' do
+      let(:player1) { ComputerPlayer.new('X', 'Computer') }
+      let(:player2) { HumanPlayer.new('O', 'Human') }
+      it 'should update current player correctly' do
+        expect(game.update_current_player('X', player1, player2)).to be_instance_of(HumanPlayer)
+        expect(game.update_current_player('O', player1, player2)).to be_instance_of(ComputerPlayer)
       end
     end
   end
