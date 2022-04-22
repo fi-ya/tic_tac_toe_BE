@@ -68,24 +68,15 @@ put '/start-game/computer_move' do
   player1 = $app_builder.game.player1
   player2 = $app_builder.game.player2
 
-  p 'computer payload', @request_payload, grid
-  p 'p1 p2', player1, player2
-
-  computer_move = $app_builder.board.available_moves(grid)[0].to_i
-
-  p 'comp move ', computer_move
+  computer_move = $app_builder.game.computer_move(grid)
 
   updated_grid = $app_builder.game.take_turn(grid, current_player_marker, computer_move, player1, player2)
   updated_current_player = $app_builder.game.update_current_player(current_player_marker, player1, player2)
-
-  p 'UPDATE', updated_grid, updated_current_player
 
   current_player_name = $app_builder.game.current_player.name
   current_player_marker = $app_builder.game.current_player.marker
   game_status = $app_builder.game.game_status(grid)
   winner = $app_builder.game.winning_player(grid, player1, player2)
-
-  p 'RESPONSE', current_player_name, current_player_marker, game_status, winner
 
   response = {
     'updated_grid' => updated_grid.to_s,

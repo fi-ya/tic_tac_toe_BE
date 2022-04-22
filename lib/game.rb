@@ -9,6 +9,10 @@ class Game
     @current_player = player1
   end
 
+  def computer_move(grid)
+    board.available_moves(grid)[0].to_i
+  end
+
   def take_turn(grid, curr_player_marker, move, player1, player2)
     play_turn(grid, curr_player_marker, move, player1, player2) unless game_over?(grid)
     grid
