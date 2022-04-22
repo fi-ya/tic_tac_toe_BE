@@ -11,6 +11,7 @@ class Game
 
   def take_turn(grid, curr_player_marker, move, player1, player2)
     play_turn(grid, curr_player_marker, move, player1, player2) unless game_over?(grid)
+    grid
   end
 
   def play_turn(grid, curr_player_marker, move, player1, player2)
