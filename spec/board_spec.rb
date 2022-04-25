@@ -69,7 +69,7 @@ RSpec.describe Board do
   describe '#reset_grid' do
     it 'should return a new grid' do
       grid = %w[X X X O O 6 7 8 9]
-      expect(board.reset_grid).to eq(%w[1 2 3 4 5 6 7 8 9])
+      expect(board.reset_grid).to eq([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])
     end
   end
 end

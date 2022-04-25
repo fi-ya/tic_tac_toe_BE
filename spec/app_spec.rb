@@ -24,7 +24,7 @@ RSpec.describe 'app' do
       end
 
       it 'returns response body including reset_current_player, reset_current_marker & new_grid' do
-        expect(response.body).to include("{\"player1_name\":\"Human\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
+        expect(response.body).to include("{\"player1_name\":\"Human\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\"}")
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe 'app' do
       end
 
       it 'returns response body including reset_current_player, reset_current_marker & new_grid' do
-        expect(response.body).to include("{\"player1_name\":\"Computer\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
+        expect(response.body).to include("{\"player1_name\":\"Computer\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\"}")
       end
     end
   end

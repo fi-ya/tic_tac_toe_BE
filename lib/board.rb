@@ -10,6 +10,25 @@ class Board
     [2, 4, 6]
   ].freeze
 
+  GRID_STATE = {empty: :empty , player1_marker: :X, player2_marker: :O}
+
+  def reset_grid
+    grid = [GRID_STATE[:empty], GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty], GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty]]
+    grid  
+  end
+
+  def convert_sqaures_to_JSON(grid)
+    grid.map do |square|
+      if square === :empty
+        " "
+      elsif square === :X
+        "X"
+      else
+        "O"
+      end
+    end
+  end
+
   def mark_board(grid, player, move)
     grid[move - 1] = player
     grid
@@ -43,7 +62,4 @@ class Board
     winning_plays.any? { |game| game == true }
   end
 
-  def reset_grid
-    %w[1 2 3 4 5 6 7 8 9]
-  end
 end

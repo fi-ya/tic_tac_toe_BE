@@ -24,11 +24,12 @@ get '/start-game/:game_mode_token' do
 
   reset_current_player_marker = $app_builder.game.player1.marker
   new_grid = $app_builder.board.reset_grid
+  converted_grid = $app_builder.board.convert_sqaures_to_JSON(new_grid)
 
   response = {
     'player1_name' => $app_builder.game.player1.name,
     'player1_marker' => reset_current_player_marker.to_s,
-    'new_grid' => new_grid.to_s
+    'new_grid' => converted_grid.to_s
   }
   response.to_json
 end
