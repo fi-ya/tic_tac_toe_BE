@@ -22,7 +22,9 @@ get '/start-game/:game_mode_token' do
   $app_builder.game_mode_token = params['game_mode_token'].to_i
   $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.game_mode_token)
 
+  
   reset_current_player_marker = $app_builder.game.player1.marker
+  p "reset_current_player_marker", reset_current_player_marker
   new_grid = $app_builder.board.reset_grid
   converted_grid = $app_builder.board.convert_sqaures_to_JSON(new_grid)
 

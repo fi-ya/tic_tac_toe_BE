@@ -46,16 +46,19 @@ class Board
   def mark_board(grid, player, move)
     p "grid, player, move", grid, player, move
     grid[move[1]] = player.to_sym
+    p "grid after board maker:", grid
     grid
   end
 
   def available_moves(grid)
+    p "avilable move grid:", grid
     available_moves = []
     grid.each do |cell|
       if cell == :empty
         available_moves.push(cell) 
       end
     end
+    p "MOVES", available_moves
     available_moves
   end
 
@@ -70,6 +73,8 @@ class Board
   # end
 
   def win?(grid)
+
+    p "WING GRID:", grid
     winning_plays = []
 
     WINNING_MOVES.all? do |winning_game|
@@ -82,7 +87,7 @@ class Board
           convert_empty_grid_to_num.push(square)
         end
       end
-      
+
       p "convert_empty_grid_to_num:", convert_empty_grid_to_num
       pos1_eq_pos2 = convert_empty_grid_to_num[winning_game[0]] == convert_empty_grid_to_num[winning_game[1]]
       pos2_eq_po3 = convert_empty_grid_to_num[winning_game[1]] == convert_empty_grid_to_num[winning_game[2]]
