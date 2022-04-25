@@ -52,6 +52,7 @@ class Game
   end
 
   def game_over?(grid)
+    p "gameove - grd", grid
     board.board_full?(grid) || board.win?(grid)
   end
 

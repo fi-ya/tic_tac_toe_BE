@@ -60,6 +60,7 @@ put '/start-game/grid' do
 
   
   updated_grid_state = $app_builder.game.take_turn(convert_grid_with_state, current_player_marker, player_move, player1, player2)
+  p "updated_grid_state ++", updated_grid_state
   # updated_current_player = $app_builder.game.update_current_player(current_player_marker, player1, player2)
  
   updated_grid = $app_builder.board.convert_sqaures_to_JSON(updated_grid_state)
