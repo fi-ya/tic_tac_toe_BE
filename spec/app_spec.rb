@@ -44,6 +44,7 @@ RSpec.describe 'app' do
   end
 
   describe '/start-game/grid' do
+    let(:response) { get '/start-game/1' }
     let(:response) { put '/start-game/grid', '[[" ", " ", " ", " ", " ", " ", " ", " ", " "], "X", [" ", "0"]' }
 
     xit 'returns status 200 OK' do
@@ -51,7 +52,7 @@ RSpec.describe 'app' do
       expect(response).to be_ok
     end
 
-    it 'returns a response body containing an updated game' do
+    xit 'returns a response body containing an updated game' do
       expect(response.body).to eq("{\"updated_grid\":\"[\\\"X\\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\",\"current_player_name\":\"Human\",\"current_player_marker\":\"O\",\"game_status\":\"Keep playing\",\"winner\":\"X\"}")
     end
   end
@@ -59,7 +60,7 @@ RSpec.describe 'app' do
   describe '/start-game/computer_move' do 
     let(:response) { put '/start-game/computer_move', '["[\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\"]", "X"]' }
 
-    it 'returns status 200 OK' do
+    xit 'returns status 200 OK' do
       expect(response.status).to eq 200
       expect(response).to be_ok
     end
