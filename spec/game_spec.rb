@@ -10,6 +10,7 @@ RSpec.describe Game do
   let(:current_player) { :player1 }
   subject(:game) { described_class.new(board, player1, player2) }
 
+  
   describe '#play_turn' do
     it 'should return an error message if invalid move' do
       expect(game.play_turn(%w[X O 3 4 5 6 7 8 9], 'X', 2, player1, player2)).to eq('Invalid move. Try again')

@@ -24,9 +24,14 @@ class Game
     p "VALID MOVE PLAY TURN:", valid_move?(move)
     if valid_move?(move)
       update_board(grid, curr_player_marker, move, player1, player2)
+      update_current_player(curr_player_marker, player1, player2)
     else
-      'Invalid move. Try again'
+      invalid_move?(move)
     end
+  end
+
+  def invalid_move?(move)
+    !valid_move?(move) ? true : false
   end
 
   def update_board(grid, curr_player_marker, move, player1, player2)
@@ -69,6 +74,8 @@ class Game
   end
 
   def valid_move?(move)
-    move[0] === :empty
+    p "move in valide ", move
+    p " is it valide", move[0] === :empty 
+    move[0] === :empty 
   end
 end

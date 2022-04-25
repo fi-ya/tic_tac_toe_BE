@@ -58,24 +58,26 @@ put '/start-game/grid' do
   # p "mark board", $app_builder.board.mark_board(convert_grid_with_state, current_player_marker, player_move)
   # p "game ove?", $app_builder.game.game_over?(convert_grid_with_state)
 
-  updated_grid_state = $app_builder.game.take_turn(convert_grid_with_state, current_player_marker, player_move, player1, player2)
-  updated_current_player = $app_builder.game.update_current_player(current_player_marker, player1, player2)
-
   
+  updated_grid_state = $app_builder.game.take_turn(convert_grid_with_state, current_player_marker, player_move, player1, player2)
+  # updated_current_player = $app_builder.game.update_current_player(current_player_marker, player1, player2)
+ 
   updated_grid = $app_builder.board.convert_sqaures_to_JSON(updated_grid_state)
   p "updated grid=>", updated_grid
   current_player_name = $app_builder.game.current_player.name
   current_player_marker = $app_builder.game.current_player.marker
   game_status = $app_builder.game.game_status(updated_grid_state)
   winner = $app_builder.game.winning_player(updated_grid, player1, player2)
+  invalid_move =  $app_builder.game.invalid_move?(player_move)
 
-  p "RESPONSE:",  updated_grid.to_s, current_player_name.to_s,current_player_marker.to_s,game_status.to_s,winner.to_s
+  p "RESPONSE:",  updated_grid.to_s, current_player_name.to_s,current_player_marker.to_s,game_status.to_s,winner.to_s, invalid_move.to_s
   response = {
     'updated_grid' => updated_grid.to_s,
     'current_player_name' => current_player_name.to_s,
     'current_player_marker' => current_player_marker.to_s,
     'game_status' => game_status.to_s,
-    'winner' => winner.to_s
+    'winner' => winner.to_s,
+    'invalid_move' => invalid_move
   }
   response.to_json
 end
