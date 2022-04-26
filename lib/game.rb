@@ -10,20 +10,15 @@ class Game
   end
 
   def computer_move(grid)
-    p "GAME computer_move grod", grid
-    p "GAME computer_move", board.available_moves(grid)[0]
     board.available_moves(grid)[0]
   end
 
   def take_turn(grid, curr_player_marker, move, player1, player2)
-    p "TAKE TURN:", grid, curr_player_marker, move, player1, player2
     play_turn(grid, curr_player_marker, move, player1, player2) unless game_over?(grid)
     grid
   end
 
   def play_turn(grid, curr_player_marker, move, player1, player2)
-    p "PLAY TURN:", grid, curr_player_marker, move, player1, player2
-    p "VALID MOVE PLAY TURN:", valid_move?(move)
     if valid_move?(move)
       update_board(grid, curr_player_marker, move, player1, player2)
       update_current_player(curr_player_marker, player1, player2)
@@ -37,7 +32,6 @@ class Game
   end
 
   def update_board(grid, curr_player_marker, move, player1, player2)
-    p "UPDATE BAORD:", grid, curr_player_marker, move, player1, player2
     if curr_player_marker == player1.marker
       board.mark_board(grid, player1.marker, move)
     else
@@ -54,14 +48,10 @@ class Game
   end
 
   def game_over?(grid)
-    p "gameove - grd", grid
     board.board_full?(grid) || board.win?(grid)
   end
 
   def game_status(grid)
-    p "game status grid:", grid
-    p "board full?", !board.board_full?(grid)
-    p "win board:", !board.win?(grid)
     if !board.board_full?(grid) && !board.win?(grid)
       'Keep playing'
     elsif board.board_full?(grid) && !board.win?(grid)
@@ -72,13 +62,10 @@ class Game
   end
 
   def winning_player(grid, player1, player2)
-    p "winning_player: ", grid, player1, player2
     grid.count(player1.marker) > grid.count(player2.marker) ? player1.marker : player2.marker
   end
 
   def valid_move?(move)
-    p "move in valide ", move
-    p " is it valide", move[0] === :empty 
     move[0] === :empty 
   end
 end
