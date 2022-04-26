@@ -13,8 +13,7 @@ class Board
   GRID_STATE = {empty: :empty , player1_mark: :X, player2_mark: :O}.freeze
 
   def reset_grid
-    grid = [GRID_STATE[:empty], GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty], GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty]]
-    grid  
+    [GRID_STATE[:empty], GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty], GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty],GRID_STATE[:empty]]
   end
 
   def convert_sqaures_to_JSON(grid)
