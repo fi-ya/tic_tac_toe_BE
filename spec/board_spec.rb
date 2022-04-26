@@ -54,18 +54,14 @@ RSpec.describe Board do
   end
 
   describe '#board_full' do
-    context 'when the board is full' do
-      it 'should return a true boolean value' do
-        expect(board.board_full?([:X, :O, :X, :O, :X, :X, :O, :X, :O])).to eq(true)
-      end
+    it 'should return a true boolean value' do
+      expect(board.board_full?([:X, :O, :X, :O, :X, :X, :O, :X, :O])).to eq(true)
     end
-
-    context 'when the board is not full' do
-      it 'should return a false boolean value' do
-        expect(board.board_full?([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
-        expect(board.board_full?([:X, :O, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
-        expect(board.board_full?([:X, :O, :X, :O, :X, :X, :O, :empty, :O])).to eq(false)
-      end
+   
+    it 'should return a false boolean value' do
+      expect(board.board_full?([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
+      expect(board.board_full?([:X, :O, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
+      expect(board.board_full?([:X, :O, :X, :O, :X, :X, :O, :empty, :O])).to eq(false)
     end
   end
 
@@ -75,10 +71,6 @@ RSpec.describe Board do
       expect(board.win?([:empty, :empty, :empty, :X, :X, :X, :empty, :O, :O])).to eq(true)
       expect(board.win?([:X, :X, :X, :O, :O, :empty, :X, :X, :X])).to eq(true)
       expect(board.win?([:X, :empty, :empty, :X, :O, :O, :X, :empty, :empty])).to eq(true)
-      # expect(board.win?(%w[O X O 4 X 6 7 X 9])).to eq(true)
-      # expect(board.win?(%w[O O X 4 5 X 7 8 X])).to eq(true)
-      # expect(board.win?(%w[X O O 4 X 6 7 8 X])).to eq(true)
-      # expect(board.win?(%w[O O X 4 X 8 X 8 9])).to eq(true)
     end
 
     it 'should return a false boolean value if there is not a winning grid' do
@@ -86,5 +78,4 @@ RSpec.describe Board do
       expect(board.win?([:X, :X, :O, :O, :X, :X, :X, :O, :O])).to eq(false)
     end
   end
-
 end

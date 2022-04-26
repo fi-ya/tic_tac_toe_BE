@@ -42,13 +42,11 @@ RSpec.describe Game do
   end
 
   describe '#update_current_player' do
-    context 'human vs human game' do
-      it 'should update current player correctly' do
-        expect(game.update_current_player('X', player1, player2)).to be_instance_of(HumanPlayer)
-        expect(game.update_current_player('O', player1, player2)).to be_instance_of(HumanPlayer)
-      end
+    it 'should update current player correctly in human vs human game' do
+      expect(game.update_current_player('X', player1, player2)).to be_instance_of(HumanPlayer)
+      expect(game.update_current_player('O', player1, player2)).to be_instance_of(HumanPlayer)
     end
-
+  
     context 'computer vs human game' do
       let(:player1) { ComputerPlayer.new('X', 'Computer') }
       let(:player2) { HumanPlayer.new('O', 'Human') }
@@ -60,25 +58,21 @@ RSpec.describe Game do
   end
 
   describe '#game_over?' do
-    context 'game over' do
-      it 'game is over' do
-        expect(game.game_over?([:X, :X, :X, :O, :O, :empty, :empty, :empty, :empty])).to eq(true)
-        expect(game.game_over?([:empty, :empty, :empty, :X, :X, :X, :empty, :O, :O])).to eq(true)
-        expect(game.game_over?([:empty, :empty, :empty, :O, :O, :empty, :X, :X, :X])).to eq(true)
-        expect(game.game_over?([:X, :empty, :empty, :X, :O, :O, :X, :empty, :empty])).to eq(true)
-        expect(game.game_over?([:O, :X, :O, :empty, :X, :empty, :empty, :X, :empty])).to eq(true)
-        expect(game.game_over?([:O, :O, :X, :empty, :empty, :X, :empty, :empty, :X])).to eq(true)
-        expect(game.game_over?([:X, :O, :O, :empty, :X, :empty, :empty, :empty, :X])).to eq(true)
-        expect(game.game_over?([:O, :O, :X, :empty, :X, :empty, :X, :empty, :empty])).to eq(true)
-      end
+    it 'game is over' do
+      expect(game.game_over?([:X, :X, :X, :O, :O, :empty, :empty, :empty, :empty])).to eq(true)
+      expect(game.game_over?([:empty, :empty, :empty, :X, :X, :X, :empty, :O, :O])).to eq(true)
+      expect(game.game_over?([:empty, :empty, :empty, :O, :O, :empty, :X, :X, :X])).to eq(true)
+      expect(game.game_over?([:X, :empty, :empty, :X, :O, :O, :X, :empty, :empty])).to eq(true)
+      expect(game.game_over?([:O, :X, :O, :empty, :X, :empty, :empty, :X, :empty])).to eq(true)
+      expect(game.game_over?([:O, :O, :X, :empty, :empty, :X, :empty, :empty, :X])).to eq(true)
+      expect(game.game_over?([:X, :O, :O, :empty, :X, :empty, :empty, :empty, :X])).to eq(true)
+      expect(game.game_over?([:O, :O, :X, :empty, :X, :empty, :X, :empty, :empty])).to eq(true)
     end
 
-    context 'game not over' do
-      it 'game is not over' do
-        expect(game.game_over?([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
-        expect(game.game_over?([:X, :O, :X, :O, :empty, :empty, :empty, :empty, :empty])).to eq(false)
-        expect(game.game_over?([:empty, :X, :O, :X, :O, :X, :X, :O, :X])).to eq(false)
-      end
+    it 'game is not over' do
+      expect(game.game_over?([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
+      expect(game.game_over?([:X, :O, :X, :O, :empty, :empty, :empty, :empty, :empty])).to eq(false)
+      expect(game.game_over?([:empty, :X, :O, :X, :O, :X, :X, :O, :X])).to eq(false)
     end
   end
 
