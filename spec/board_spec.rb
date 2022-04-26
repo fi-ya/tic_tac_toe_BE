@@ -14,7 +14,7 @@ RSpec.describe Board do
 
   describe '#available_moves' do
     it 'should return an array of 7 avaialble moves when given a grid with two positions taken' do
-      expect(board.available_moves([:X, :O, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq([:empty, :empty, :empty, :empty, :empty, :empty, :empty])
+      expect(board.available_moves([:X, :O, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq([[:empty, 2], [:empty, 3], [:empty, 4], [:empty, 5], [:empty, 6], [:empty, 7], [:empty, 8]])
     end
   end
 

@@ -10,7 +10,8 @@ class Game
   end
 
   def computer_move(grid)
-    board.available_moves(grid)[0].to_i
+    p "GAME computer_move", board.available_moves(grid)[0]
+    board.available_moves(grid)[0]
   end
 
   def take_turn(grid, curr_player_marker, move, player1, player2)

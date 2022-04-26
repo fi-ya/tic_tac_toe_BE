@@ -53,18 +53,18 @@ class Board
   def available_moves(grid)
     p "avilable move grid:", grid
     available_moves = []
-    grid.each do |cell|
+    grid.each_with_index do |cell, i|
       if cell == :empty
-        available_moves.push(cell) 
+        available_moves.push([cell, i])
       end
     end
-    p "MOVES", available_moves
+    p "BOARD available_moves END", available_moves
     available_moves
   end
 
   def board_full?(grid)
-    p "board_full grid:", grid
-    p "available moves in board full:", available_moves(grid).empty?
+    p "BOARD board_full? grid:", grid
+    p "BOARD board_full? available moves", available_moves(grid).empty?
     available_moves(grid).empty?
   end
 
