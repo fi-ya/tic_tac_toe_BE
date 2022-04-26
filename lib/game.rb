@@ -10,6 +10,7 @@ class Game
   end
 
   def computer_move(grid)
+    p "GAME computer_move grod", grid
     p "GAME computer_move", board.available_moves(grid)[0]
     board.available_moves(grid)[0]
   end

@@ -3,6 +3,41 @@ require 'board'
 RSpec.describe Board do
   subject(:board) { described_class.new }
 
+  describe '#reset_grid' do
+    it 'should return a new grid' do
+      expect(board.reset_grid).to eq([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])
+    end
+  end
+
+  describe '#convert_sqaures_to_JSON' do
+    it 'should return a new grid with empty strings' do
+      grid = [:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty]
+      expect(board.convert_sqaures_to_JSON(grid)).to eq([" ", " ", " ", " ", " ", " ", " ", " ", " "])
+    end
+
+    it 'should return a new grid with empty strings and players markers' do
+      grid = [:X, :O, :X, :empty, :empty, :empty, :empty, :empty, :empty]
+      expect(board.convert_sqaures_to_JSON(grid)).to eq(["X", "O", "X", " ", " ", " ", " ", " ", " "])
+    end
+  end
+
+  describe '#convert_square_with_state' do
+    it 'should return a empty symbol' do
+      empty_square = " "
+      expect(board.convert_square_with_state(empty_square)).to eq(:empty)
+    end
+
+    it 'should return a player1_mark symbol' do
+      player1_square = "X"
+      expect(board.convert_square_with_state(player1_square)).to eq(:X)
+    end
+
+    it 'should return a player2_mark symbol' do
+      player2_square = "O"
+      expect(board.convert_square_with_state(player2_square)).to eq(:O)
+    end
+  end
+
   describe '#mark_board' do
     it 'should mark the board correctly' do
       grid = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
@@ -52,9 +87,4 @@ RSpec.describe Board do
     end
   end
 
-  describe '#reset_grid' do
-    it 'should return a new grid' do
-      expect(board.reset_grid).to eq([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])
-    end
-  end
 end

@@ -10,10 +10,28 @@ RSpec.describe Game do
   let(:current_player) { :player1 }
   subject(:game) { described_class.new(board, player1, player2) }
 
+  describe '#computer_move' do
+    it 'should return first available :empty and its grid index' do
+      grid = [:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty]
+      expect(game.computer_move(grid)).to eq([:empty, 0])
+    end
+  end
   
   describe '#play_turn' do
     it 'should return true if invalid move' do
       expect(game.play_turn(["X", "O", " ", " ", " ", " ", " ", " ", " "], 'X', ["X", "0"], player1, player2)).to eq(true)
+    end
+  end
+
+  describe '#invalid_move?' do
+    it 'should return true if player move invalid' do
+      move = [:X, 0]
+      expect(game.invalid_move?(move)).to eq(true)
+    end
+
+    it 'should return false if player valid' do
+      move = [:empty, 0]
+      expect(game.invalid_move?(move)).to eq(false)
     end
   end
 

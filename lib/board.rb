@@ -68,10 +68,6 @@ class Board
     available_moves(grid).empty?
   end
 
-  # def position_taken?(position, grid)
-  #   !grid.include?(position.to_s)
-  # end
-
   def win?(grid)
 
     p "WING GRID:", grid
