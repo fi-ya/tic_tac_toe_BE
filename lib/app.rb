@@ -23,23 +23,24 @@ get '/start-game/:game_mode_token' do
   $app_builder.game.player1 = $app_builder.game_mode.set_player1($app_builder.game_mode_token)
   
   reset_current_player_marker = $app_builder.game.player1.marker
-  new_grid = $app_builder.board.reset_grid
-  converted_grid = $app_builder.board.convert_sqaures_to_JSON(new_grid)
+  grid = $app_builder.board.reset_grid
+  converted_grid = $app_builder.board.convert_sqaures_to_JSON(grid)
 
   response = {
-    'player1_name' => $app_builder.game.player1.name,
-    'player1_marker' => reset_current_player_marker.to_s,
-    'new_grid' => converted_grid.to_s
+    'player1_type' => $app_builder.game.player1.name,
+    'player1_marker' => reset_current_player_marker,
+    'grid' => converted_grid
   }
   response.to_json
 end
 
 put '/start-game/grid' do
   @request_payload = JSON.parse request.body.read
+  p "HUM request payload", @request_payload
 
-  grid = @request_payload[0]
-  current_player_marker = @request_payload[1]
-  player_move = @request_payload[2]
+  grid = @request_payload['grid']
+  current_player_marker = @request_payload['current_player_marker']
+  player_move = @request_payload['player_move']
   player1 = $app_builder.game.player1
   player2 = $app_builder.game.player2
 
@@ -58,11 +59,11 @@ put '/start-game/grid' do
   invalid_move =  $app_builder.game.invalid_move?(player_move)
 
   response = {
-    'updated_grid' => updated_grid.to_s,
-    'current_player_name' => current_player_name.to_s,
-    'current_player_marker' => current_player_marker.to_s,
-    'game_status' => game_status.to_s,
-    'winner' => winner.to_s,
+    'updated_grid' => updated_grid,
+    'current_player_name' => current_player_name,
+    'current_player_marker' => current_player_marker,
+    'game_status' => game_status,
+    'winner' => winner,
     'invalid_move' => invalid_move
   }
   response.to_json
@@ -70,9 +71,10 @@ end
 
 put '/start-game/computer_move' do
   @request_payload = JSON.parse request.body.read
+  p "COMP request payload", @request_payload
 
-  grid = JSON.parse @request_payload[0]
-  current_player_marker = @request_payload[1]
+  grid = @request_payload['grid']
+  current_player_marker = @request_payload['current_player_marker']
   player1 = $app_builder.game.player1
   player2 = $app_builder.game.player2
 
@@ -88,11 +90,11 @@ put '/start-game/computer_move' do
   invalid_move =  $app_builder.game.invalid_move?(computer_move)
 
   response = {
-    'updated_grid' => updated_grid.to_s,
-    'current_player_name' => current_player_name.to_s,
-    'current_player_marker' => current_player_marker.to_s,
-    'game_status' => game_status.to_s,
-    'winner' => winner.to_s,
+    'updated_grid' => updated_grid,
+    'current_player_name' => current_player_name,
+    'current_player_marker' => current_player_marker,
+    'game_status' => game_status,
+    'winner' => winner,
     'invalid_move' => invalid_move
   }
   response.to_json
