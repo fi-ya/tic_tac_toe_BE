@@ -24,7 +24,7 @@ RSpec.describe 'app' do
       end
 
       it 'returns response body including reset_current_player, reset_current_marker & new_grid' do
-        expect(response.body).to include("{\"player1_name\":\"Human\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
+        expect(response.body).to include("{\"player1_name\":\"Human\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\"}")
       end
     end
 
@@ -38,34 +38,34 @@ RSpec.describe 'app' do
       end
 
       it 'returns response body including reset_current_player, reset_current_marker & new_grid' do
-        expect(response.body).to include("{\"player1_name\":\"Computer\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\"1\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\"}")
+        expect(response.body).to include("{\"player1_name\":\"Computer\",\"player1_marker\":\"X\",\"new_grid\":\"[\\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\"}")
       end
     end
   end
 
   describe '/start-game/grid' do
-    let(:response) { put '/start-game/grid', '[["1", "2", "3", "4", "5", "6", "7", "8", "9"], "X", "1"]' }
+    let(:response) { put '/start-game/grid', '[[" ", " ", " ", " ", " ", " ", " ", " ", " "], "X", [" ", "0"]]' }
 
     it 'returns status 200 OK' do
       expect(response.status).to eq 200
       expect(response).to be_ok
     end
 
-    it 'returns a response body containg updated game' do
-      expect(response.body).to eq("{\"updated_grid\":\"[\\\"X\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\",\"current_player_name\":\"Human\",\"current_player_marker\":\"O\",\"game_status\":\"Keep playing\",\"winner\":\"X\"}")
+    it 'returns a response body containing an updated game' do
+      expect(response.body).to eq("{\"updated_grid\":\"[\\\"X\\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\",\"current_player_name\":\"Human\",\"current_player_marker\":\"O\",\"game_status\":\"Keep playing\",\"winner\":\"X\",\"invalid_move\":false}")
     end
   end
 
   describe '/start-game/computer_move' do 
-    let(:response) { put '/start-game/computer_move', '["[\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\"]", "X"]' }
+    let(:response) { put '/start-game/computer_move', '["[\" \", \" \", \" \", \" \", \" \", \" \", \" \", \" \", \" \"]", "X"]' }
 
     it 'returns status 200 OK' do
       expect(response.status).to eq 200
       expect(response).to be_ok
     end
 
-    it 'returns a response body containg updated game' do
-      expect(response.body).to eq("{\"updated_grid\":\"[\\\"X\\\", \\\"2\\\", \\\"3\\\", \\\"4\\\", \\\"5\\\", \\\"6\\\", \\\"7\\\", \\\"8\\\", \\\"9\\\"]\",\"current_player_name\":\"Human\",\"current_player_marker\":\"O\",\"game_status\":\"Keep playing\",\"winner\":\"X\"}")
+    it 'returns a response body containing an updated game' do
+      expect(response.body).to eq("{\"updated_grid\":\"[\\\"X\\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\", \\\" \\\"]\",\"current_player_name\":\"Human\",\"current_player_marker\":\"O\",\"game_status\":\"Keep playing\",\"winner\":\"X\",\"invalid_move\":false}")
     end
   end
 

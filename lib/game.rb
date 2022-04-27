@@ -10,7 +10,7 @@ class Game
   end
 
   def computer_move(grid)
-    board.available_moves(grid)[0].to_i
+    board.available_moves(grid)[0]
   end
 
   def take_turn(grid, curr_player_marker, move, player1, player2)
@@ -19,11 +19,16 @@ class Game
   end
 
   def play_turn(grid, curr_player_marker, move, player1, player2)
-    if valid_move?(move, grid)
+    if valid_move?(move)
       update_board(grid, curr_player_marker, move, player1, player2)
+      update_current_player(curr_player_marker, player1, player2)
     else
-      'Invalid move. Try again'
+      invalid_move?(move)
     end
+  end
+
+  def invalid_move?(move)
+    !valid_move?(move) ? true : false
   end
 
   def update_board(grid, curr_player_marker, move, player1, player2)
@@ -60,7 +65,7 @@ class Game
     grid.count(player1.marker) > grid.count(player2.marker) ? player1.marker : player2.marker
   end
 
-  def valid_move?(index, grid)
-    !board.position_taken?(index, grid) && index.between?(1, 9)
+  def valid_move?(move)
+    move[0] === :empty 
   end
 end

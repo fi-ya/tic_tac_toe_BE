@@ -10,26 +10,43 @@ RSpec.describe Game do
   let(:current_player) { :player1 }
   subject(:game) { described_class.new(board, player1, player2) }
 
+  describe '#computer_move' do
+    it 'should return first available :empty and its grid index' do
+      grid = [:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty]
+      expect(game.computer_move(grid)).to eq([:empty, 0])
+    end
+  end
+  
   describe '#play_turn' do
-    it 'should return an error message if invalid move' do
-      expect(game.play_turn(%w[X O 3 4 5 6 7 8 9], 'X', 2, player1, player2)).to eq('Invalid move. Try again')
+    it 'should return true if invalid move' do
+      expect(game.play_turn(["X", "O", " ", " ", " ", " ", " ", " ", " "], 'X', ["X", "0"], player1, player2)).to eq(true)
+    end
+  end
+
+  describe '#invalid_move?' do
+    it 'should return true if player move invalid' do
+      move = [:X, 0]
+      expect(game.invalid_move?(move)).to eq(true)
+    end
+
+    it 'should return false if player valid' do
+      move = [:empty, 0]
+      expect(game.invalid_move?(move)).to eq(false)
     end
   end
 
   describe '#update_board' do
     it 'should update the board with the correct marker' do
-      expect(game.update_board(%w[1 2 3 4 5 6 7 8 9], 'X', 1, player1, player2)).to eq(%w[X 2 3 4 5 6 7 8 9])
+      expect(game.update_board([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty], 'X', [:empty, 0], player1, player2)).to eq([:X, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])
     end
   end
 
   describe '#update_current_player' do
-    context 'human vs human game' do
-      it 'should update current player correctly' do
-        expect(game.update_current_player('X', player1, player2)).to be_instance_of(HumanPlayer)
-        expect(game.update_current_player('O', player1, player2)).to be_instance_of(HumanPlayer)
-      end
+    it 'should update current player correctly in human vs human game' do
+      expect(game.update_current_player('X', player1, player2)).to be_instance_of(HumanPlayer)
+      expect(game.update_current_player('O', player1, player2)).to be_instance_of(HumanPlayer)
     end
-
+  
     context 'computer vs human game' do
       let(:player1) { ComputerPlayer.new('X', 'Computer') }
       let(:player2) { HumanPlayer.new('O', 'Human') }
@@ -41,59 +58,56 @@ RSpec.describe Game do
   end
 
   describe '#game_over?' do
-    context 'game over' do
-      it 'game is over' do
-        expect(game.game_over?(%w[X X X O O 6 7 8 9])).to eq(true)
-        expect(game.game_over?(%w[1 2 3 X X X 7 O O])).to eq(true)
-        expect(game.game_over?(%w[1 2 3 O O 6 X X X])).to eq(true)
-        expect(game.game_over?(%w[X 2 3 X O O X 8 9])).to eq(true)
-        expect(game.game_over?(%w[O X O 4 X 6 7 X 9])).to eq(true)
-        expect(game.game_over?(%w[O O X 4 5 X 7 8 X])).to eq(true)
-        expect(game.game_over?(%w[X O O 4 X 6 7 8 X])).to eq(true)
-        expect(game.game_over?(%w[O O X 4 X 8 X 8 9])).to eq(true)
-      end
+    it 'game is over' do
+      expect(game.game_over?([:X, :X, :X, :O, :O, :empty, :empty, :empty, :empty])).to eq(true)
+      expect(game.game_over?([:empty, :empty, :empty, :X, :X, :X, :empty, :O, :O])).to eq(true)
+      expect(game.game_over?([:empty, :empty, :empty, :O, :O, :empty, :X, :X, :X])).to eq(true)
+      expect(game.game_over?([:X, :empty, :empty, :X, :O, :O, :X, :empty, :empty])).to eq(true)
+      expect(game.game_over?([:O, :X, :O, :empty, :X, :empty, :empty, :X, :empty])).to eq(true)
+      expect(game.game_over?([:O, :O, :X, :empty, :empty, :X, :empty, :empty, :X])).to eq(true)
+      expect(game.game_over?([:X, :O, :O, :empty, :X, :empty, :empty, :empty, :X])).to eq(true)
+      expect(game.game_over?([:O, :O, :X, :empty, :X, :empty, :X, :empty, :empty])).to eq(true)
     end
 
-    context 'game not over' do
-      it 'game is not over' do
-        expect(game.game_over?(%w[1 2 3 4 5 6 7 8 9])).to eq(false)
-        expect(game.game_over?(%w[X O X O 5 6 7 8 9])).to eq(false)
-        expect(game.game_over?(%w[1 X O X O X X O X])).to eq(false)
-      end
+    it 'game is not over' do
+      expect(game.game_over?([:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq(false)
+      expect(game.game_over?([:X, :O, :X, :O, :empty, :empty, :empty, :empty, :empty])).to eq(false)
+      expect(game.game_over?([:empty, :X, :O, :X, :O, :X, :X, :O, :X])).to eq(false)
     end
   end
 
   describe '#game_status' do
     it 'should return an keep playing message when board not full and no winning board' do
-      expect(game.game_status(%w[X O X O 5 6 7 8 9])).to eq('Keep playing')
+      expect(game.game_status([:X, :O, :empty, :empty, :empty, :empty, :empty, :empty, :empty])).to eq('Keep playing')
     end
 
     it 'should return an tie message when board full and no winning board' do
-      expect(game.game_status(%w[X X O O X X X O O])).to eq('Tie')
+      expect(game.game_status([:X, :X, :O, :O, :X, :X, :X, :O, :O])).to eq('Tie')
     end
 
     it 'should return an won message when board full and winning board' do
-      expect(game.game_status(%w[X X X O O O 7 8 9])).to eq('Won')
+      expect(game.game_status([:X, :X, :X, :O, :O, :empty, :empty, :empty, :empty])).to eq('Won')
     end
   end
 
   describe '#winning_player' do
     it 'should return X marker if X wins a game' do
-      expect(game.winning_player(%w[X X X O 5 6 O 8 9], player1, player2)).to eq('X')
+      expect(game.winning_player(["X", "X", "X", "O", "O", " ", " ", " ", " "], player1, player2)).to eq('X')
     end
 
     it 'should return O marker if O wins a game' do
-      expect(game.winning_player(%w[O O O X 5 6 X 8 9], player1, player2)).to eq('O')
+      expect(game.winning_player(["X", "O", " ", "X", "O", "X", " ", "O", " "], player1, player2)).to eq('O')
     end
   end
 
   describe '#valid_move?' do
-    it 'should verify if move is not valid if player picks zero' do
-      expect(game.valid_move?(0, %w[1 2 3 4 5 6 7 8 9])).to eq(false)
+    it 'should verify if move is not valid if grid state is :O or :X' do
+      expect(game.valid_move?([:O, 1])).to eq(false)
+      expect(game.valid_move?([:X, 2])).to eq(false)
     end
 
-    it 'should verify if move valid if player picks 6' do
-      expect(game.valid_move?(6, %w[1 2 3 4 5 6 7 8 9])).to eq(true)
+    it 'should verify if move valid if grid state is empty' do
+      expect(game.valid_move?([:empty, 1])).to eq(true)
     end
   end
 end

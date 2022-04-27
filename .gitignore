@@ -57,3 +57,4 @@ build-iPhoneSimulator/
 .DS_Store
 .vscode
 echo coverage >> .gitignore
+.nyc_output/out.json

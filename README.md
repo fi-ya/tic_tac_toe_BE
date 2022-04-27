@@ -30,8 +30,13 @@ Run the following command in the terminal to run the Rspec test suite:
 To view code coverage report run command
 `open coverage/index.html`
 
-
-## Tech Stack
+Run Guard through Bundler with:
+`bundle exec guard`
+clears terminal
+`Ctrl + L`  
+exit terminal 
+`exit` 
+## Dependencies 
 - [Ruby](https://www.ruby-lang.org/en/) 3.1.0
 - [Rspec](https://relishapp.com/rspec) 3.11
 - [Bundler](https://bundler.io/) 2.3.7
@@ -41,8 +46,13 @@ To view code coverage report run command
 - [Sinatra cors](https://rubygems.org/gems/sinatra-cors) 1.2.0
 - [SimpleCov](https://github.com/simplecov-ruby/simplecov)
 - [RuboCop](https://rubocop.org/)
+- [Guard](https://github.com/guard/guard)
+- [Rack::Test](https://github.com/rack/rack-test)
+- [Thin](https://github.com/macournoyer/thin)
+- [Pry](https://github.com/pry/pry)
 ## Features
-
+- 3 HTTP endpoints (GET, PUT)
+- Computer player move assigned by backend logic
 
 ## Resources 
 - [GitHub CI Guide](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration)
